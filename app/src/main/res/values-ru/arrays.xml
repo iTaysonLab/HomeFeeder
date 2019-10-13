@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_overlay_theme_desc">
+        <item>Автоматически (из лаунчера)</item>
+        <item>Автоматически (из системы)</item>
+        <item>Светлая</item>
+        <item>Темная</item>
+    </array>
+
+    <array name="pref_overlay_transparency_desc">
+        <item>Непрозрачный</item>
+        <item>Полупрозрачный</item>
+        <item>Прозрачный</item>
+    </array>
+
+    <array name="date_ago_hrs">
+        <item>час назад</item>
+        <item>два часа назад</item>
+        <item>три часа назад</item>
+    </array>
+
+    <array name="date_fullmonths">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </array>
+
+    <array name="date_shortmonths">
+        <item>Янв</item>
+        <item>Фев</item>
+        <item>Мар</item>
+        <item>Апр</item>
+        <item>Мая</item>
+        <item>Июн</item>
+        <item>Июл</item>
+        <item>Авг</item>
+        <item>Сен</item>
+        <item>Окт</item>
+        <item>Ноя</item>
+        <item>Дек</item>
+    </array>
+</resources>

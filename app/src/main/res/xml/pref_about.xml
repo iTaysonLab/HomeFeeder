@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="about_app"
+        android:title="@string/app_name"
+        android:icon="@mipmap/ic_launcher" />
+    <PreferenceCategory android:title="@string/pref_cat_contact">
+        <Preference
+            android:key="about_tg"
+            android:title="@string/pref_tg" />
+        <Preference
+            android:key="about_tg_dev"
+            android:title="@string/pref_tg_author" />
+    </PreferenceCategory>
+</PreferenceScreen>

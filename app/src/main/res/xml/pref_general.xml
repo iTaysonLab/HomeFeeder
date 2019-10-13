@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="hf_permission"
+        android:title="@string/allow_notify_pref"
+        android:icon="@drawable/ic_warning_24"
+        android:summary="@string/allow_notify_pref_revoked" />
+    <PreferenceCategory android:title="@string/pref_cat_overlay">
+        <ListPreference
+            android:defaultValue="auto_launcher"
+            android:entries="@array/pref_overlay_theme_desc"
+            android:entryValues="@array/pref_overlay_theme_values"
+            android:key="ovr_theme"
+            android:title="@string/pref_ovr_theme" />
+        <ListPreference
+            android:defaultValue="non_transparent"
+            android:entries="@array/pref_overlay_transparency_desc"
+            android:entryValues="@array/pref_overlay_transparency_values"
+            android:key="ovr_transparency"
+            android:title="@string/pref_transparency" />
+    </PreferenceCategory>
+</PreferenceScreen>

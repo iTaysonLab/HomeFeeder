@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="date_ago_mins" tools:ignore="MissingQuantity">
+        <item quantity="other">%,d минут назад</item>
+        <item quantity="one">%,d минуту назад</item>
+        <item quantity="few">%,d минуты назад</item>
+    </plurals>
+    <plurals name="date_ago_secs" tools:ignore="MissingQuantity">
+        <item quantity="other">%,d секунд назад</item>
+        <item quantity="one">%,d секунду назад</item>
+        <item quantity="few">%,d секунды назад</item>
+    </plurals>
+</resources>

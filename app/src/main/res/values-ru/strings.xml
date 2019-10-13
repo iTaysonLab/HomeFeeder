@@ -1,0 +1,32 @@
+<resources>
+    <string name="title_settings">Настройки</string>
+    <string name="title_about">О приложении</string>
+
+    <string name="date_ago_now">сейчас</string>
+    <string name="date_at">в</string>
+    <string name="date_at_1am">@string/date_at</string>
+    <string name="today">сегодня</string>
+    <string name="tomorrow">завтра</string>
+    <string name="yesterday">вчера</string>
+
+    <string name="pref_cat_contact">Контакты</string>
+    <string name="pref_tg">Официальный канал в Telegram</string>
+    <string name="pref_tg_author">Разработчик</string>
+
+    <string name="pref_cat_overlay">Лента</string>
+    <string name="pref_transparency">Прозрачность фона</string>
+    <string name="pref_ovr_theme">Тема</string>
+
+    <string name="service_label">Категория ленты \"Уведомления\"</string>
+    <string name="allow_notify_pref">Доступ к уведомлениям</string>
+    <string name="allow_notify_pref_granted">Есть</string>
+    <string name="allow_notify_pref_revoked">Нету, нажмите сюда для подробной информации</string>
+    <string name="allow_notify_desc">HomeFeeder нужно разрешение \"Доступ к уведомлениям\" для показа уведомлений в ленте. Данные обрабатываются на устройстве и только на нем.\n\nВозможно, некоторые функции HomeFeeder могут быть недоступными до выдачи разрешения.</string>
+    <string name="allow_notify_to_settings">Настройки</string>
+    <string name="cancel">Отменить</string>
+
+    <string name="overlay_no_permission">Разрешение не выдано</string>
+    <string name="overlay_reload">Нажмите для перезагрузки</string>
+    <string name="overlay_no_permission_desc">HomeFeeder нужно разрешение \"Доступ к уведомлениям\" для показа уведомлений в ленте.</string>
+    <string name="overlay_no_permission_snackbar">Проверьте что вы выдали разрешение \"Доступ к уведомлениям\"</string>
+</resources>

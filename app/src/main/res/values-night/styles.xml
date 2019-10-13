@@ -1,0 +1,10 @@
+<resources>
+    <style name="ThemedAlertDialog" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:colorAccent">@color/globalAccent</item>
+        <item name="colorAccent">@color/globalAccent</item>
+        <item name="colorPrimary">@color/globalAccent</item>
+        <item name="dialogCornerRadius">8dp</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button.MD2</item>
+        <item name="android:textAppearanceButton">@style/TextAppearance.MaterialComponents.Button.MD2</item>
+    </style>
+</resources>

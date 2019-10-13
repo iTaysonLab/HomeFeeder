@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="globalAccent">#28bdd7</color>
+    <color name="overlayBg">#80000000</color>
+    <color name="bg">#121212</color>
+    <color name="cardBg">#212121</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="textColorSecondary">#a0a0a0</color>
+</resources>
