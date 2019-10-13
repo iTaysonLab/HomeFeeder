@@ -16,10 +16,12 @@
     <string name="pref_cat_contact">Contacts</string>
     <string name="pref_tg">Official Telegram channel</string>
     <string name="pref_tg_author">Developer</string>
+    <string name="pref_git">Source code</string>
 
     <string name="pref_cat_overlay">Overlay</string>
     <string name="pref_transparency">Overlay background transparency</string>
     <string name="pref_ovr_theme">Overlay theme</string>
+    <string name="pref_compact">Compact item layout</string>
 
     <string name="service_label">Notification feed category</string>
     <string name="allow_notify_pref">Notification permission</string>

@@ -7,11 +7,11 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="ua.itaysonlab.homefeeder.fragments.ui.PreferenceFragment"
+        android:name="ua.itaysonlab.homefeeder.fragments.PreferenceFragment"
         android:label="@string/title_settings" />
 
     <fragment
         android:id="@+id/navigation_about"
-        android:name="ua.itaysonlab.homefeeder.fragments.ui.AboutFragment"
+        android:name="ua.itaysonlab.homefeeder.fragments.AboutFragment"
         android:label="@string/title_about" />
 </navigation>

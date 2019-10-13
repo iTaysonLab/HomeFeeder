@@ -1,4 +1,4 @@
-package ua.itaysonlab.homefeeder.fragments.ui
+package ua.itaysonlab.homefeeder.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.preference.Preference
 import ua.itaysonlab.homefeeder.BuildConfig
 import ua.itaysonlab.homefeeder.R
+import ua.itaysonlab.homefeeder.fragments.base.FixedPreferencesFragment
 
 class AboutFragment : FixedPreferencesFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -16,6 +17,7 @@ class AboutFragment : FixedPreferencesFragment() {
 
         val tg = findPreference<Preference>("about_tg")!!
         val tgdev = findPreference<Preference>("about_tg_dev")!!
+        val git = findPreference<Preference>("about_source")!!
 
         tg.summary = "@homefeeder"
         tg.setOnPreferenceClickListener {
@@ -25,6 +27,10 @@ class AboutFragment : FixedPreferencesFragment() {
         tgdev.summary = "@itaysonlab"
         tgdev.setOnPreferenceClickListener {
             openLink(activity!!, "https://t.me/itaysonlab")
+            true
+        }
+        git.setOnPreferenceClickListener {
+            openLink(activity!!, "https://gitlab.com/iTaysonLab/homefeeder/")
             true
         }
     }

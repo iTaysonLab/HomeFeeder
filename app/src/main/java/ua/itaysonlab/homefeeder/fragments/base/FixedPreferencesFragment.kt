@@ -1,8 +1,7 @@
-package ua.itaysonlab.homefeeder.fragments.ui
+package ua.itaysonlab.homefeeder.fragments.base
 
 import android.view.MenuItem
 import androidx.preference.*
-import ua.itaysonlab.homefeeder.utils.Logger
 
 abstract class FixedPreferencesFragment : PreferenceFragmentCompat() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

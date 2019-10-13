@@ -18,5 +18,9 @@
             android:entryValues="@array/pref_overlay_transparency_values"
             android:key="ovr_transparency"
             android:title="@string/pref_transparency" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ovr_compact"
+            android:title="@string/pref_compact" />
     </PreferenceCategory>
 </PreferenceScreen>

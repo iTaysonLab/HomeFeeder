@@ -11,5 +11,8 @@
         <Preference
             android:key="about_tg_dev"
             android:title="@string/pref_tg_author" />
+        <Preference
+            android:key="about_source"
+            android:title="@string/pref_git" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/rl_margin"
@@ -29,58 +28,9 @@
             android:padding="12dp"
             android:background="@color/cardBg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp">
-
-                <ImageView
-                    android:id="@+id/not_app_icon"
-                    android:tint="@color/textColorPrimary"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    tools:src="@drawable/ic_settings_24" />
-
-                <TextView
-                    android:layout_marginStart="6dp"
-                    android:id="@+id/not_app_name"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/textColorPrimary"
-                    android:layout_height="match_parent"
-                    tools:text="App name" />
-
-                <TextView
-                    android:layout_marginStart="6dp"
-                    android:id="@+id/not_app_date"
-                    android:layout_width="wrap_content"
-                    android:textAllCaps="true"
-                    android:textSize="12sp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/textColorSecondary"
-                    android:layout_height="match_parent"
-                    tools:text="Date" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/not_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="Notification title" />
-
-            <TextView
-                android:id="@+id/not_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColorSecondary"
-                tools:text="Notification text" />
+            <include layout="@layout/notification_generic_content" />
         </LinearLayout>
     </FrameLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -12,10 +12,12 @@
     <string name="pref_cat_contact">Контакты</string>
     <string name="pref_tg">Официальный канал в Telegram</string>
     <string name="pref_tg_author">Разработчик</string>
+    <string name="pref_git">Исходный код</string>
 
     <string name="pref_cat_overlay">Лента</string>
     <string name="pref_transparency">Прозрачность фона</string>
     <string name="pref_ovr_theme">Тема</string>
+    <string name="pref_compact">Компактные элементы списка</string>
 
     <string name="service_label">Категория ленты \"Уведомления\"</string>
     <string name="allow_notify_pref">Доступ к уведомлениям</string>

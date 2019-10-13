@@ -10,7 +10,7 @@ import com.google.android.libraries.gsa.d.a.OverlayController;
 import com.google.android.libraries.gsa.d.a.OverlaysController;
 import com.google.android.libraries.gsa.d.a.v;
 
-import ua.itaysonlab.homefeeder.overlay.Overlay;
+import ua.itaysonlab.homefeeder.overlay.OverlayKt;
 
 public final class ConfigurationOverlayController extends OverlaysController {
 
@@ -31,7 +31,7 @@ public final class ConfigurationOverlayController extends OverlaysController {
         if (configuration != null) {
             context = context.createConfigurationContext(configuration);
         }
-        return new Overlay(context, i, i2);
+        return new OverlayKt(context);
     }
 
     //Todo: was protected, and return modified

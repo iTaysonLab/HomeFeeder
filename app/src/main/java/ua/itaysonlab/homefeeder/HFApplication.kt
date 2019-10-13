@@ -4,9 +4,10 @@ import android.app.Application
 import android.app.Notification
 import ua.itaysonlab.homefeeder.utils.Logger
 import android.content.pm.PackageManager
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
-import ua.itaysonlab.homefeeder.overlay.Overlay
+import androidx.core.graphics.drawable.toDrawable
 import ua.itaysonlab.homefeeder.utils.UIBridge
 
 class HFApplication: Application() {
@@ -33,7 +34,18 @@ class HFApplication: Application() {
             } catch (e: Exception) {
                 instance.packageManager.getApplicationIcon(pkg)
             }
+        }
 
+        fun getLargeIcon(notification: Notification): BitmapDrawable? {
+            return try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    notification.getLargeIcon().loadDrawable(instance) as? BitmapDrawable
+                } else {
+                    notification.largeIcon.toDrawable(instance.resources)
+                }
+            } catch (e: Exception) {
+                null
+            }
         }
     }
 

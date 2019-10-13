@@ -1,10 +1,10 @@
-## HomeFeeder
+# HomeFeeder
 Custom Google Now Feed replacement for launchers.
 
-# Supported launchers
+## Supported launchers
 - Librechair
 - Shade Launcher
 - Mostly anything with custom feed provider support
 
-# Credits
+## Credits
 https://github.com/FabianTerhorst/DrawerOverlayService as base for overlay service

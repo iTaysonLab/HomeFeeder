@@ -2,7 +2,9 @@ package ua.itaysonlab.homefeeder.overlay.notification
 
 import android.app.Notification
 import android.app.PendingIntent
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.media.session.MediaSession
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.utils.TimeUtils
 
@@ -18,8 +20,10 @@ data class NotificationWrapper (
     val time: CharSequence,
     val key: String,
     // Other
+    val mediaSessionToken: MediaSession.Token?,
     val intent: PendingIntent?,
-    val icon: Drawable
+    val icon: Drawable,
+    val largeIcon: BitmapDrawable?
 ) {
     constructor(notification: Notification, packageName: String, id: Int, key: String) : this(
         id,
@@ -30,8 +34,10 @@ data class NotificationWrapper (
         HFApplication.getAppNameByPkg(packageName),
         TimeUtils.getDateFormattedRelative(HFApplication.instance, notification.`when`/1000),
         key,
+        notification.extras.getParcelable<MediaSession.Token>(Notification.EXTRA_MEDIA_SESSION),
         notification.contentIntent,
-        HFApplication.getSmallIcon(notification, packageName)
+        HFApplication.getSmallIcon(notification, packageName),
+        HFApplication.getLargeIcon(notification)
     )
 
     override fun equals(other: Any?): Boolean {

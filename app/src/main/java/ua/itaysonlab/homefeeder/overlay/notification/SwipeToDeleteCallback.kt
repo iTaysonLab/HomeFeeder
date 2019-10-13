@@ -4,13 +4,16 @@ import android.graphics.*
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.notification_simple.view.*
+import ua.itaysonlab.homefeeder.preferences.HFPreferences
+import ua.itaysonlab.homefeeder.utils.Logger
+import java.math.RoundingMode
 
 abstract class SwipeToDeleteCallback(private val listener: RecyclerItemTouchHelperListener) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
     override fun getMovementFlags(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        if (viewHolder.adapterPosition == 0) return 0
+        if (viewHolder.itemViewType != 0) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
@@ -35,9 +38,15 @@ abstract class SwipeToDeleteCallback(private val listener: RecyclerItemTouchHelp
         viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
         actionState: Int, isCurrentlyActive: Boolean
     ) {
-        val foregroundView = (viewHolder as NotificationAdapter.SimpleViewHolder).itemView.iforeground
+        val itemView = (viewHolder as NotificationAdapter.SimpleViewHolder).itemView
+
+        if (dX < 255f && HFPreferences.overlayCompact) {
+            val rounded = (dX / 255.0f).toBigDecimal().setScale(2, RoundingMode.UP).toFloat()
+            itemView.ibg_icon.alpha = rounded
+        }
+
         ItemTouchHelper.Callback.getDefaultUIUtil().onDrawOver(
-            c, recyclerView, foregroundView, dX, dY,
+            c, recyclerView, itemView.iforeground, dX, dY,
             actionState, isCurrentlyActive
         )
     }
@@ -52,10 +61,15 @@ abstract class SwipeToDeleteCallback(private val listener: RecyclerItemTouchHelp
         viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
         actionState: Int, isCurrentlyActive: Boolean
     ) {
-        val foregroundView = (viewHolder as NotificationAdapter.SimpleViewHolder).itemView.iforeground
+        val itemView = (viewHolder as NotificationAdapter.SimpleViewHolder).itemView
+
+        if (dX < 255f && HFPreferences.overlayCompact) {
+            val rounded = (dX / 255.0f).toBigDecimal().setScale(2, RoundingMode.UP).toFloat()
+            itemView.ibg_icon.alpha = rounded
+        }
 
         ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(
-            c, recyclerView, foregroundView, dX, dY,
+            c, recyclerView, itemView.iforeground, dX, dY,
             actionState, isCurrentlyActive
         )
     }

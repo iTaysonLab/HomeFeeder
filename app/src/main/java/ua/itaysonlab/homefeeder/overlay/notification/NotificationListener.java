@@ -1,5 +1,6 @@
 package ua.itaysonlab.homefeeder.overlay.notification;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -64,8 +65,8 @@ public class NotificationListener extends NotificationListenerService {
     public List<NotificationWrapper> getNotifications() {
         List<NotificationWrapper> list = new ArrayList<>();
         for (StatusBarNotification sbn : getActiveNotifications()) {
-            if (sbn.isOngoing()) continue;
-            if (HFPreferences.INSTANCE.getDebugging()) {
+            if (sbn.isOngoing() && !sbn.getNotification().extras.containsKey(Notification.EXTRA_MEDIA_SESSION)) continue;
+            if (HFPreferences.INSTANCE.getContentDebugging()) {
                 Logger.INSTANCE.log(getClass().getSimpleName(), "===========");
                 for (String s : sbn.getNotification().extras.keySet()) {
                     if (sbn.getNotification().extras.get(s) != null)
