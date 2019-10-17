@@ -27,8 +27,8 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:orientation="vertical"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
         <include layout="@layout/notification_generic_content" />
     </LinearLayout>
 </FrameLayout>

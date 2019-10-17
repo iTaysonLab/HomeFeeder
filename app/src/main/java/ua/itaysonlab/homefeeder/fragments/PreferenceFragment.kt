@@ -32,16 +32,23 @@ class PreferenceFragment : FixedPreferencesFragment() {
     }
 
     private fun bindAppearance() {
+        val summaryProviderInstance = ListPreference.SimpleSummaryProvider.getInstance()
+
         val theme = findPreference<ListPreference>("ovr_theme")!!
         val transparency = findPreference<ListPreference>("ovr_transparency")!!
+        val cardBackground = findPreference<ListPreference>("ovr_card_bg")!!
+        val overlayBackground = findPreference<ListPreference>("ovr_bg")!!
         val compact = findPreference<SwitchPreference>("ovr_compact")!!
 
-        theme.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+        theme.summaryProvider = summaryProviderInstance
+        transparency.summaryProvider = summaryProviderInstance
+        cardBackground.summaryProvider = summaryProviderInstance
+        overlayBackground.summaryProvider = summaryProviderInstance
+
         theme.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             HFApplication.bridge.callServer("reloadTheme:${newValue as String}")
             true
         }
-        transparency.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         transparency.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             HFApplication.bridge.callServer("reloadTransparent:${newValue as String}")
             true

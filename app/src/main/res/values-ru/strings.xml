@@ -19,6 +19,9 @@
     <string name="pref_ovr_theme">Тема</string>
     <string name="pref_compact">Компактные элементы списка</string>
 
+    <string name="pref_card_bg">Фон карточек</string>
+    <string name="pref_bg_color">Фон ленты</string>
+
     <string name="service_label">Категория ленты \"Уведомления\"</string>
     <string name="allow_notify_pref">Доступ к уведомлениям</string>
     <string name="allow_notify_pref_granted">Есть</string>

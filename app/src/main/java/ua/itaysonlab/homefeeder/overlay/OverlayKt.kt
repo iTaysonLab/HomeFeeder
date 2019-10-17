@@ -51,6 +51,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     @ColorInt private var backgroundColorHint = Color.BLACK
     @ColorInt private var backgroundColorHintSecondary = Color.BLACK
+    @ColorInt private var backgroundColorHintTertiary = Color.BLACK
 
     private val permissionGranted: Boolean get() {
         val enabledNotificationListeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
@@ -86,8 +87,12 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             else -> ThemeUtils.defaultLightThemeColors
         }
 
-        useBackgroundColorHint = currentTheme == "auto_launcher";
-        shouldUseSN = theme.get(ThemeUtils.Colors.IS_LIGHT.position) == 1;
+        useBackgroundColorHint = currentTheme == "auto_launcher"
+        shouldUseSN = theme.get(ThemeUtils.Colors.IS_LIGHT.position) == 1
+        if (!shouldUseSN && isSNApplied) {
+            isSNApplied = false
+            SNUtils.removeLight(getWindow().decorView)
+        }
         //theme.put(ThemeUtils.Colors.CARD_BG.getPosition(), backgroundColorHintSecondary);
         return theme
     }
@@ -109,6 +114,9 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         }
         if (bundle.containsKey("background_secondary_color_hint")) {
             backgroundColorHintSecondary = bundle.getInt("background_secondary_color_hint")
+        }
+        if (bundle.containsKey("background_tertiary_color_hint")) {
+            backgroundColorHintTertiary = bundle.getInt("background_tertiary_color_hint")
         }
         updateTheme(null)
     }

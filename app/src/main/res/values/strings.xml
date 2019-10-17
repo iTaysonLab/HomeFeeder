@@ -23,6 +23,9 @@
     <string name="pref_ovr_theme">Overlay theme</string>
     <string name="pref_compact">Compact item layout</string>
 
+    <string name="pref_card_bg">Card background</string>
+    <string name="pref_bg_color">Overlay background</string>
+
     <string name="service_label">Notification feed category</string>
     <string name="allow_notify_pref">Notification permission</string>
     <string name="allow_notify_pref_granted">Granted</string>

@@ -13,6 +13,26 @@
         <item>Transparent</item>
     </array>
 
+    <array name="pref_color_variations">
+        <item>Theme-based</item>
+        <item>White</item>
+        <item>Dark</item>
+        <item>AMOLED</item>
+        <item>Launcher: Primary color</item>
+        <item>Launcher: Secondary color</item>
+        <item>Launcher: Tertiary color</item>
+    </array>
+
+    <array name="pref_color_variations_values">
+        <item>theme</item>
+        <item>white</item>
+        <item>dark</item>
+        <item>amoled</item>
+        <item>launcher_primary</item>
+        <item>launcher_secondary</item>
+        <item>launcher_tertiary</item>
+    </array>
+
     <array name="pref_overlay_transparency_values">
         <item>non_transparent</item>
         <item>half</item>
