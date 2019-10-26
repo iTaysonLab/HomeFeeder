@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.media.session.MediaSession
 import ua.itaysonlab.homefeeder.HFApplication
-import ua.itaysonlab.homefeeder.utils.TimeUtils
+import ua.itaysonlab.homefeeder.utils.RelativeTimeHelper
 
 data class NotificationWrapper (
     // Int
@@ -32,7 +32,7 @@ data class NotificationWrapper (
         notification.extras.getCharSequence(Notification.EXTRA_TEXT, ""),
         notification.extras.getCharSequence(Notification.EXTRA_SUB_TEXT, ""),
         HFApplication.getAppNameByPkg(packageName),
-        TimeUtils.getDateFormattedRelative(HFApplication.instance, notification.`when`/1000),
+        RelativeTimeHelper.getDateFormattedRelative(HFApplication.instance, notification.`when`/1000),
         key,
         notification.extras.getParcelable<MediaSession.Token>(Notification.EXTRA_MEDIA_SESSION),
         notification.contentIntent,

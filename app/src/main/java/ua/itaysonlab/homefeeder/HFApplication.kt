@@ -8,12 +8,12 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.core.graphics.drawable.toDrawable
-import ua.itaysonlab.homefeeder.utils.UIBridge
+import ua.itaysonlab.homefeeder.utils.OverlayBridge
 
 class HFApplication: Application() {
     companion object {
         lateinit var instance: HFApplication
-        val bridge = UIBridge()
+        val bridge = OverlayBridge()
 
         fun getAppNameByPkg(pkg: String): CharSequence {
             val ai = try {

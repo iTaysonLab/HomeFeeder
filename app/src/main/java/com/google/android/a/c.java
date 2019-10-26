@@ -7,8 +7,6 @@ import android.os.Parcelable.Creator;
 import java.util.HashMap;
 
 public class c {
-    private static final ClassLoader bHi = c.class.getClassLoader();
-
     private c() {
     }
 
@@ -36,24 +34,11 @@ public class c {
         parcelable.writeToParcel(parcel, 0);
     }
 
-    public static void b(Parcel parcel, Parcelable parcelable) {
-        if (parcelable == null) {
-            parcel.writeInt(0);
-            return;
-        }
-        parcel.writeInt(1);
-        parcelable.writeToParcel(parcel, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
-    }
-
     public static void a(Parcel parcel, IInterface iInterface) {
         if (iInterface == null) {
             parcel.writeStrongBinder(null);
         } else {
             parcel.writeStrongBinder(iInterface.asBinder());
         }
-    }
-
-    public static HashMap b(Parcel parcel) {
-        return parcel.readHashMap(bHi);
     }
 }

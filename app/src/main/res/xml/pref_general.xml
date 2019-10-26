@@ -26,13 +26,13 @@
             android:defaultValue="theme"
             android:entries="@array/pref_color_variations"
             android:entryValues="@array/pref_color_variations_values"
-            android:key="ovr_card_bg"
-            android:title="@string/pref_card_bg" />
+            android:key="ovr_bg"
+            android:title="@string/pref_bg_color" />
         <ListPreference
             android:defaultValue="theme"
             android:entries="@array/pref_color_variations"
             android:entryValues="@array/pref_color_variations_values"
-            android:key="ovr_bg"
-            android:title="@string/pref_bg_color" />
+            android:key="ovr_card_bg"
+            android:title="@string/pref_card_bg" />
     </PreferenceCategory>
 </PreferenceScreen>

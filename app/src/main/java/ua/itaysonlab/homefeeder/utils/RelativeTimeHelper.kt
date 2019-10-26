@@ -6,7 +6,7 @@ import java.util.Calendar
 import java.util.Locale
 import kotlin.math.min
 
-object TimeUtils {
+object RelativeTimeHelper {
     private val calendar: Calendar
         get() = Calendar.getInstance()
 

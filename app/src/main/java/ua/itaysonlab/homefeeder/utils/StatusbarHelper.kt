@@ -3,7 +3,7 @@ package ua.itaysonlab.homefeeder.utils
 import android.os.Build
 import android.view.View
 
-object SNUtils {
+object StatusbarHelper {
     fun setLight(view: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             var flags = view.systemUiVisibility

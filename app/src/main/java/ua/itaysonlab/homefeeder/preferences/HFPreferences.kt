@@ -1,11 +1,13 @@
 package ua.itaysonlab.homefeeder.preferences
 
-import ua.itaysonlab.homefeeder.utils.Preferences
+import ua.itaysonlab.homefeeder.utils.PreferenceHelper
 
 object HFPreferences {
-    val debugging get() = Preferences.get("HFDebugging", false)
-    val contentDebugging get() = Preferences.get("HFContentDebugging", false)
-    val overlayCompact get() = Preferences.get("ovr_compact", false)
-    val overlayTheme get() = Preferences.get("ovr_theme", "auto_launcher")
-    val overlayTransparency get() = Preferences.get("ovr_transparency", "non_transparent")
+    val debugging get() = PreferenceHelper.get("HFDebugging", false)
+    val contentDebugging get() = PreferenceHelper.get("HFContentDebugging", false)
+    val overlayCompact get() = PreferenceHelper.get("ovr_compact", false)
+    val overlayTheme get() = PreferenceHelper.get("ovr_theme", "auto_launcher")
+    val overlayTransparency get() = PreferenceHelper.get("ovr_transparency", "non_transparent")
+    val overlayBackground get() = PreferenceHelper.get("ovr_bg", "theme")
+    val cardBackground get() = PreferenceHelper.get("ovr_card_bg", "theme")
 }

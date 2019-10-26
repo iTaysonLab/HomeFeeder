@@ -34,8 +34,7 @@ final class OverlayControllerBinder extends LauncherOverlayInterfaceBinder imple
 
     private void checkCallerId() {
         if (Binder.getCallingUid() != this.mCallerUid) {
-            //throw new RemoteException("Invalid client");
-            throw new RuntimeException("Invalid client");//FIXME: modified, was remote exception and should still be one, realy have to change that
+            throw new RuntimeException("Invalid client");
         }
     }
 
@@ -102,13 +101,10 @@ final class OverlayControllerBinder extends LauncherOverlayInterfaceBinder imple
                 Message.obtain(this.mainThreadHandler, 0, 0, 0).sendToTarget();
                 of(true);
                 this.mOptions = i2;
-                switch (this.mOptions) {
-                    case 1:
-                        baseCallbackVar = new MinusOneOverlayCallback(this.overlaysController, this);
-                        break;
-                    default:
-                        baseCallbackVar = new BaseCallback();
-                        break;
+                if (this.mOptions == 1) {
+                    baseCallbackVar = new MinusOneOverlayCallback(this.overlaysController, this);
+                } else {
+                    baseCallbackVar = new BaseCallback();
                 }
                 this.baseCallback = baseCallbackVar;
                 this.mainThreadHandler = new Handler(Looper.getMainLooper(), this.baseCallback);

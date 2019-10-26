@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import ua.itaysonlab.homefeeder.HFApplication
 
-object Preferences {
+object PreferenceHelper {
     private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(HFApplication.instance)
 
     fun get(key: String, default: Boolean): Boolean {

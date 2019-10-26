@@ -1,14 +1,13 @@
-package ua.itaysonlab.homefeeder.utils
+package ua.itaysonlab.homefeeder.theming
 
 import android.content.Context
 import android.content.res.Configuration
 import android.util.SparseIntArray
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 
-object ThemeUtils {
+object Theming {
     val defaultLightThemeColors = createLightTheme()
     val defaultDarkThemeColors = createDarkTheme()
 

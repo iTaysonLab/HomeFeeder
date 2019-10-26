@@ -30,7 +30,7 @@ class AboutFragment : FixedPreferencesFragment() {
             true
         }
         git.setOnPreferenceClickListener {
-            openLink(activity!!, "https://gitlab.com/iTaysonLab/homefeeder/")
+            openLink(activity!!, "https://github.com/iTaysonLab/HomeFeeder/")
             true
         }
     }

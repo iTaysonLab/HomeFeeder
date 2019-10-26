@@ -36,9 +36,10 @@ class PreferenceFragment : FixedPreferencesFragment() {
 
         val theme = findPreference<ListPreference>("ovr_theme")!!
         val transparency = findPreference<ListPreference>("ovr_transparency")!!
-        val cardBackground = findPreference<ListPreference>("ovr_card_bg")!!
-        val overlayBackground = findPreference<ListPreference>("ovr_bg")!!
         val compact = findPreference<SwitchPreference>("ovr_compact")!!
+
+        val overlayBackground = findPreference<ListPreference>("ovr_bg")!!
+        val cardBackground = findPreference<ListPreference>("ovr_card_bg")!!
 
         theme.summaryProvider = summaryProviderInstance
         transparency.summaryProvider = summaryProviderInstance
@@ -46,16 +47,27 @@ class PreferenceFragment : FixedPreferencesFragment() {
         overlayBackground.summaryProvider = summaryProviderInstance
 
         theme.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.callServer("reloadTheme:${newValue as String}")
+            HFApplication.bridge.getCallback()?.applyNewTheme(newValue as String)
             true
         }
+
         transparency.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.callServer("reloadTransparent:${newValue as String}")
+            HFApplication.bridge.getCallback()?.applyNewTransparency(newValue as String)
             true
         }
 
         compact.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.callServer("reloadCompact:${newValue as Boolean}")
+            HFApplication.bridge.getCallback()?.applyCompactCard(newValue as Boolean)
+            true
+        }
+
+        overlayBackground.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+            HFApplication.bridge.getCallback()?.applyNewOverlayBg(newValue as String)
+            true
+        }
+
+        cardBackground.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+            HFApplication.bridge.getCallback()?.applyNewCardBg(newValue as String)
             true
         }
     }
@@ -79,7 +91,7 @@ class PreferenceFragment : FixedPreferencesFragment() {
         }
         val sendToBridge = Preference(preferenceManager.context).apply {
             key = "HFBridgeTest"
-            title = "Test UIBridge"
+            title = "Test OverlayBridge"
             summary = "Send message \"uiBridgeTest\" to Overlay"
             isIconSpaceReserved = false
         }

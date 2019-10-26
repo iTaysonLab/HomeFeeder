@@ -22,8 +22,9 @@ import kotlinx.android.synthetic.main.overlay_header.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
+import ua.itaysonlab.homefeeder.isDark
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
-import ua.itaysonlab.homefeeder.utils.ThemeUtils
+import ua.itaysonlab.homefeeder.theming.Theming
 
 class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val notifications: MutableList<NotificationWrapper> = mutableListOf()
@@ -123,8 +124,8 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             theme ?: return
-            view.header_preferences.imageTintList = ColorStateList.valueOf(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_PRIMARY.position))
-            view.header_title.setTextColor(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_PRIMARY.position))
+            view.header_preferences.imageTintList = ColorStateList.valueOf(theme!!.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+            view.header_title.setTextColor(theme!!.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         } else {
             val item = notifications[position-1]
             if (item.mediaSessionToken != null) {
@@ -175,19 +176,23 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         } else view.setOnClickListener(null)
 
         theme ?: return
+
+        val cardBg = theme!!.get(Theming.Colors.CARD_BG.position)
         if (!compact) {
-            if (view is CardView) view.setCardBackgroundColor(theme!!.get(ThemeUtils.Colors.CARD_BG.position))
-            view.iforeground.setBackgroundColor(theme!!.get(ThemeUtils.Colors.CARD_BG.position))
+            if (view is CardView) view.setCardBackgroundColor(cardBg)
+            view.iforeground.setBackgroundColor(cardBg)
         } else {
             view.ibg_icon.alpha = 0f
         }
-        view.not_title.setTextColor(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_PRIMARY.position))
-        view.not_app_name.setTextColor(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_PRIMARY.position))
-        view.not_text.setTextColor(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_PRIMARY.position))
-        view.not_app_date.setTextColor(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_SECONDARY.position))
-        view.not_app_subtitle.setTextColor(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_SECONDARY.position))
-        view.not_app_icon.imageTintList = ColorStateList.valueOf(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_PRIMARY.position))
-        view.ibg_icon.imageTintList = ColorStateList.valueOf(theme!!.get(ThemeUtils.Colors.TEXT_COLOR_PRIMARY.position))
+
+        val theme = if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
+        view.not_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.not_app_name.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.not_text.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
+        view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
+        view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.ibg_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
     }
 
     private fun bindMedia(item: NotificationWrapper, holder: MediaViewHolder) {

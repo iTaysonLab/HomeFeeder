@@ -38,4 +38,7 @@
     <string name="overlay_reload">Click here to reload</string>
     <string name="overlay_no_permission_desc">HomeFeeder needs \"Notification access\" permission to show your notifications in a overlay.</string>
     <string name="overlay_no_permission_snackbar">Please verify you have allowed \"Notification access\" permission and try again.</string>
+
+    <string name="fsource_notifications">Notifications</string>
+    <string name="fsource_weather">Weather</string>
 </resources>

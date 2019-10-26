@@ -9,7 +9,7 @@
     android:orientation="horizontal">
     <TextView
         android:layout_width="0dp"
-        android:text="@string/app_name"
+        android:text="@string/fsource_notifications"
         android:textColor="@color/textColorPrimary"
         android:textSize="26sp"
         android:layout_gravity="center"

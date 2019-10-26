@@ -13,6 +13,16 @@
         <item>Прозрачный</item>
     </array>
 
+    <array name="pref_color_variations">
+        <item>Из темы</item>
+        <item>Светлый</item>
+        <item>Темный</item>
+        <item>AMOLED</item>
+        <item>Из лаунчера: Основной цвет</item>
+        <item>Из лаунчера: Вторичный цвет</item>
+        <item>Из лаунчера: Третичный цвет</item>
+    </array>
+
     <array name="date_ago_hrs">
         <item>час назад</item>
         <item>два часа назад</item>
