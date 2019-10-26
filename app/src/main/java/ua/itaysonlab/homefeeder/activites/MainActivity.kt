@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
+import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationListener
 
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             setTitle(R.string.allow_notify_pref)
             setMessage(R.string.allow_notify_desc)
             setPositiveButton(R.string.allow_notify_to_settings) { _, _ ->
-                startActivityForResult(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS").putExtra(
+                startActivityForResult(Intent(HFApplication.ACTION_MANAGE_LISTENERS).putExtra(
                     ":settings:fragment_args_key", ComponentName(context, NotificationListener::class.java).flattenToString()
                 ), 1)
             }

@@ -12,6 +12,8 @@ import ua.itaysonlab.homefeeder.utils.OverlayBridge
 
 class HFApplication: Application() {
     companion object {
+        const val ACTION_MANAGE_LISTENERS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"
+
         lateinit var instance: HFApplication
         val bridge = OverlayBridge()
 
