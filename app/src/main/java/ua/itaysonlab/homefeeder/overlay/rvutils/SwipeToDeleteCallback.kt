@@ -1,11 +1,11 @@
-package ua.itaysonlab.homefeeder.overlay.notification
+package ua.itaysonlab.homefeeder.overlay.rvutils
 
 import android.graphics.*
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.notification_simple.view.*
+import ua.itaysonlab.homefeeder.overlay.notification.NotificationAdapter
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
-import ua.itaysonlab.homefeeder.utils.Logger
 import java.math.RoundingMode
 
 abstract class SwipeToDeleteCallback(private val listener: RecyclerItemTouchHelperListener) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {

@@ -1,4 +1,4 @@
-package ua.itaysonlab.homefeeder.overlay.notification;
+package ua.itaysonlab.homefeeder.overlay.rvutils;
 
 import android.graphics.Bitmap;
 
