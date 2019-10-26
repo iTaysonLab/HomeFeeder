@@ -23,6 +23,7 @@ import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
 import ua.itaysonlab.homefeeder.isDark
+import ua.itaysonlab.homefeeder.overlay.rvutils.StackBlur
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.theming.Theming
 
@@ -42,21 +43,11 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class SimpleViewHolder(view: View) : RecyclerView.ViewHolder(view)
-    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view)
     class MediaViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
             1 -> {
-                return HeaderViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.overlay_header,
-                        parent,
-                        false
-                    )
-                )
-            }
-            2 -> {
                 return MediaViewHolder(
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.notification_media,
@@ -78,9 +69,8 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 0) return 1
-        val item = notifications[position-1]
-        return if (item.mediaSessionToken != null) 2 else 0
+        val item = notifications[position]
+        return if (item.mediaSessionToken != null) 1 else 0
     }
 
     fun update(list: List<NotificationWrapper>) {
@@ -107,38 +97,21 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemId(position: Int): Long {
-        return if (position == 0) {
-            RecyclerView.NO_ID
-        } else {
-            notifications[position-1].id.toLong()
-        }
+        return notifications[position].id.toLong()
     }
 
     override fun onBindViewHolder(h: RecyclerView.ViewHolder, position: Int) {
-        if (position == 0) {
-            val holder = h as HeaderViewHolder
-            val view = holder.itemView
-
-            view.header_preferences.setOnClickListener {
-                HFApplication.instance.startActivity(Intent(HFApplication.instance, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            }
-
-            theme ?: return
-            view.header_preferences.imageTintList = ColorStateList.valueOf(theme!!.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            view.header_title.setTextColor(theme!!.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        val item = notifications[position]
+        if (item.mediaSessionToken != null) {
+            bindMedia(item, h as MediaViewHolder)
         } else {
-            val item = notifications[position-1]
-            if (item.mediaSessionToken != null) {
-                bindMedia(item, h as MediaViewHolder)
-            } else {
-                bindSimpleNotification(item, h as SimpleViewHolder)
-            }
+            bindSimpleNotification(item, h as SimpleViewHolder)
         }
     }
 
     fun removeItem(position: Int): String {
-        val backup = notifications[position-1].key
-        notifications.removeAt(position-1)
+        val backup = notifications[position].key
+        notifications.removeAt(position)
         notifyItemRemoved(position)
         return backup
     }
@@ -185,14 +158,17 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             view.ibg_icon.alpha = 0f
         }
 
-        val theme = if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
+        val theme =
+            if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
         view.not_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         view.not_app_name.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         view.not_text.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
         view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
-        view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        view.ibg_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.not_app_icon.imageTintList =
+            ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.ibg_icon.imageTintList =
+            ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
     }
 
     private fun bindMedia(item: NotificationWrapper, holder: MediaViewHolder) {
@@ -234,5 +210,5 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         theme ?: return
     }
 
-    override fun getItemCount() = notifications.size + 1
+    override fun getItemCount() = notifications.size
 }

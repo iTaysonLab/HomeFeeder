@@ -20,14 +20,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.libraries.gsa.d.a.OverlayController
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.overlay_header.view.*
 import kotlinx.android.synthetic.main.overlay_layout.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
+import ua.itaysonlab.homefeeder.activites.MainActivity
+import ua.itaysonlab.homefeeder.isDark
 import ua.itaysonlab.homefeeder.isLight
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationAdapter
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationListener
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationWrapper
-import ua.itaysonlab.homefeeder.overlay.notification.SwipeToDeleteCallback
+import ua.itaysonlab.homefeeder.overlay.rvutils.SwipeToDeleteCallback
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.utils.Logger
 import ua.itaysonlab.homefeeder.utils.StatusbarHelper
@@ -133,7 +136,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
         injectTheme(theme)
 
-        //theme.put(Theming.Colors.CARD_BG.getPosition(), backgroundColorHintSecondary);
         return theme
     }
 
@@ -146,19 +148,13 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
                 Logger.log(javaClass.simpleName, "key: $it, data: $item")
             }
         }
-        if (bundle.containsKey("is_background_dark")) {
-            isLauncherDarkTheme = bundle.getBoolean("is_background_dark")
-        }
-        if (bundle.containsKey("background_color_hint")) {
-            backgroundColorHint = bundle.getInt("background_color_hint")
-        }
-        if (bundle.containsKey("background_secondary_color_hint")) {
-            backgroundColorHintSecondary = bundle.getInt("background_secondary_color_hint")
-        }
-        if (bundle.containsKey("background_tertiary_color_hint")) {
-            backgroundColorHintTertiary = bundle.getInt("background_tertiary_color_hint")
-        }
-        updateTheme(null)
+
+        isLauncherDarkTheme = bundle.getBoolean("is_background_dark", true)
+        backgroundColorHint = bundle.getInt("background_color_hint", Color.BLACK)
+        backgroundColorHintSecondary = bundle.getInt("background_secondary_color_hint", Color.BLACK)
+        backgroundColorHintTertiary = bundle.getInt("background_tertiary_color_hint", Color.BLACK)
+
+        updateTheme()
     }
 
     private fun updateTheme(force: String? = null) {
@@ -176,13 +172,13 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             rootView.nas_action.setBackgroundColor(currentHFTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
             rootView.nas_action.setTextColor(currentHFTheme.get(Theming.Colors.CARD_BG.position))
         }
+
+        val theme = if (currentHFTheme.get(Theming.Colors.OVERLAY_BG.position).isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
+        rootView.header_preferences.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        rootView.header_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
     }
 
-    override fun onCreate(bundle: Bundle?) {
-        super.onCreate(bundle)
-        getWindow().decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        rootView = View.inflate(ContextThemeWrapper(this, R.style.AppTheme), R.layout.overlay_layout, this.container)
-
+    private fun initRecyclerView() {
         rootView.swipe_to_refresh.setOnRefreshListener {
             refreshNotifications()
         }
@@ -200,22 +196,41 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         }) {}
         val helper = ItemTouchHelper(callback)
         helper.attachToRecyclerView(rootView.recycler)
+    }
+
+    private fun initHeader() {
+        rootView.header_preferences.setOnClickListener {
+            HFApplication.instance.startActivity(Intent(HFApplication.instance, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+    }
+
+    private fun initPermissionStub() {
+        rootView.overlay_root.visibility = View.GONE
+        rootView.no_access_stub.visibility = View.VISIBLE
+        rootView.nas_action.setOnClickListener {
+            startActivity(Intent(HFApplication.ACTION_MANAGE_LISTENERS))
+        }
+        rootView.nas_reload.setOnClickListener {
+            if (permissionGranted) {
+                bindService()
+                rootView.overlay_root.visibility = View.VISIBLE
+                rootView.no_access_stub.visibility = View.GONE
+            } else {
+                Snackbar.make(rootView.user_root, R.string.overlay_no_permission_snackbar, Snackbar.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onCreate(bundle: Bundle?) {
+        super.onCreate(bundle)
+        getWindow().decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        rootView = View.inflate(ContextThemeWrapper(this, R.style.AppTheme), R.layout.overlay_layout, this.container)
+
+        initRecyclerView()
+        initHeader()
 
         if (!permissionGranted) {
-            rootView.swipe_to_refresh.visibility = View.GONE
-            rootView.no_access_stub.visibility = View.VISIBLE
-            rootView.nas_action.setOnClickListener {
-                startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
-            }
-            rootView.nas_reload.setOnClickListener {
-                if (permissionGranted) {
-                    bindService()
-                    rootView.swipe_to_refresh.visibility = View.VISIBLE
-                    rootView.no_access_stub.visibility = View.GONE
-                } else {
-                    Snackbar.make(rootView.user_root, R.string.overlay_no_permission_snackbar, Snackbar.LENGTH_LONG).show()
-                }
-            }
+            initPermissionStub()
         } else {
             bindService()
         }

@@ -14,23 +14,29 @@
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_to_refresh"
+        <LinearLayout
+            android:id="@+id/overlay_root"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:visibility="gone">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
+            android:layout_height="match_parent">
+            <include layout="@layout/overlay_header" />
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_to_refresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/notification_simple" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/notification_simple" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/no_access_stub"
             android:visibility="gone"
-            tools:visibility="visible"
+            tools:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
