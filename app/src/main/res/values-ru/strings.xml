@@ -34,4 +34,7 @@
     <string name="overlay_reload">Нажмите для перезагрузки</string>
     <string name="overlay_no_permission_desc">HomeFeeder нужно разрешение \"Доступ к уведомлениям\" для показа уведомлений в ленте.</string>
     <string name="overlay_no_permission_snackbar">Проверьте что вы выдали разрешение \"Доступ к уведомлениям\"</string>
+
+    <string name="fsource_notifications">Уведомления</string>
+    <string name="fsource_weather">Погода</string>
 </resources>
