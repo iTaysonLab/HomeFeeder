@@ -239,7 +239,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     private fun refreshNotifications() {
-        rootView.swipe_to_refresh.isRefreshing = true
+        //rootView.swipe_to_refresh.isRefreshing = true
         if (mBound) {
             val list = mService.notifications
             if (HFPreferences.contentDebugging) {

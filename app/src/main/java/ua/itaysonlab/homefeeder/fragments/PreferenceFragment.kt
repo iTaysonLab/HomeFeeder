@@ -8,6 +8,7 @@ import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
 import ua.itaysonlab.homefeeder.fragments.base.FixedPreferencesFragment
+import ua.itaysonlab.homefeeder.prefui.HFElementPreview
 
 class PreferenceFragment : FixedPreferencesFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -41,33 +42,40 @@ class PreferenceFragment : FixedPreferencesFragment() {
         val overlayBackground = findPreference<ListPreference>("ovr_bg")!!
         val cardBackground = findPreference<ListPreference>("ovr_card_bg")!!
 
+        val preview = findPreference<HFElementPreview>("preview")!!
+
         theme.summaryProvider = summaryProviderInstance
         transparency.summaryProvider = summaryProviderInstance
         cardBackground.summaryProvider = summaryProviderInstance
         overlayBackground.summaryProvider = summaryProviderInstance
 
         theme.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.getCallback()?.applyNewTheme(newValue as String)
+            preview.applyNewTheme(newValue as String)
+            HFApplication.bridge.getCallback()?.applyNewTheme(newValue)
             true
         }
 
         transparency.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.getCallback()?.applyNewTransparency(newValue as String)
+            preview.applyNewTransparency(newValue as String)
+            HFApplication.bridge.getCallback()?.applyNewTransparency(newValue)
             true
         }
 
         compact.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.getCallback()?.applyCompactCard(newValue as Boolean)
+            preview.applyCompact(newValue as Boolean)
+            HFApplication.bridge.getCallback()?.applyCompactCard(newValue)
             true
         }
 
         overlayBackground.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.getCallback()?.applyNewOverlayBg(newValue as String)
+            preview.applyNewOverlayBg(newValue as String)
+            HFApplication.bridge.getCallback()?.applyNewOverlayBg(newValue)
             true
         }
 
         cardBackground.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            HFApplication.bridge.getCallback()?.applyNewCardBg(newValue as String)
+            preview.applyNewCardBg(newValue as String)
+            HFApplication.bridge.getCallback()?.applyNewCardBg(newValue)
             true
         }
     }

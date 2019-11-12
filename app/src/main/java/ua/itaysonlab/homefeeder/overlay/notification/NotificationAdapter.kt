@@ -158,17 +158,14 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             view.ibg_icon.alpha = 0f
         }
 
-        val theme =
-            if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
+        val theme = if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
         view.not_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         view.not_app_name.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         view.not_text.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
         view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
-        view.not_app_icon.imageTintList =
-            ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        view.ibg_icon.imageTintList =
-            ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.ibg_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
     }
 
     private fun bindMedia(item: NotificationWrapper, holder: MediaViewHolder) {
