@@ -18,6 +18,7 @@ class NotificationListener: NotificationListenerService() {
         val list = ArrayList<NotificationWrapper>()
         for (sbn in activeNotifications) {
             if (sbn.isOngoing && !sbn.notification.extras.containsKey(Notification.EXTRA_MEDIA_SESSION)) continue
+            if (sbn.notification.extras.getString(Notification.EXTRA_TEMPLATE) == "android.app.Notification\$MessagingStyle") continue // some dirty fixes
             if (HFPreferences.contentDebugging) {
                 Logger.log(javaClass.simpleName, "===========")
                 for (s in sbn.notification.extras.keySet()) {

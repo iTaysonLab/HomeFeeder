@@ -23,7 +23,8 @@ data class NotificationWrapper (
     val mediaSessionToken: MediaSession.Token?,
     val intent: PendingIntent?,
     val icon: Drawable,
-    val largeIcon: BitmapDrawable?
+    val largeIcon: BitmapDrawable?,
+    val inboxStyleLines: Array<CharSequence>?
 ) {
     constructor(notification: Notification, packageName: String, id: Int, key: String) : this(
         id,
@@ -37,8 +38,9 @@ data class NotificationWrapper (
         notification.extras.getParcelable<MediaSession.Token>(Notification.EXTRA_MEDIA_SESSION),
         notification.contentIntent,
         HFApplication.getSmallIcon(notification, packageName),
-        HFApplication.getLargeIcon(notification)
-    )
+        HFApplication.getLargeIcon(notification),
+        notification.extras.getCharSequenceArray(Notification.EXTRA_TEXT_LINES)
+        )
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -148,6 +148,14 @@ class NotificationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         } else view.setOnClickListener(null)
 
+        // Inbox style related
+        if (item.inboxStyleLines != null) {
+            view.not_title.text = item.text
+            view.not_text.text = item.inboxStyleLines.joinToString("\n")
+            view.not_title.visibility = View.VISIBLE
+            view.not_text.visibility = View.VISIBLE
+        }
+
         theme ?: return
 
         val cardBg = theme!!.get(Theming.Colors.CARD_BG.position)
