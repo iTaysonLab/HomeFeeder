@@ -1,8 +1,10 @@
 package ua.itaysonlab.homefeeder.prefui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.AttributeSet
@@ -52,7 +54,7 @@ class HFElementPreview @JvmOverloads constructor(
     }
 
     fun applyNewCardBg(value: String) {
-        overlayBgColorChoice = value
+        cardBgColorChoice = value
         applyNewTheme(null)
     }
 
@@ -64,8 +66,10 @@ class HFElementPreview @JvmOverloads constructor(
     private fun updateDimmer(bg: String, t: String) {
         view.wallpaper_dimmer.apply {
             alpha = when (t) {
-                "non_transparent" -> 1f
+                "less_half" -> 0.25f
                 "half" -> 0.5f
+                "more_half" -> 0.75f
+                "non_transparent" -> 1f
                 else -> 0f
             }
 
@@ -125,7 +129,10 @@ class HFElementPreview @JvmOverloads constructor(
 
         view = holder.itemView
         if (!::layoutInflater.isInitialized) layoutInflater = LayoutInflater.from(holder.itemView.context)
-        view.wallpaper_preview.setImageDrawable(WallpaperManager.getInstance(HFApplication.instance).drawable)
+
+        if (ContextCompat.checkSelfPermission(view.context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            view.wallpaper_preview.setImageDrawable(WallpaperManager.getInstance(HFApplication.instance).drawable)
+        }
 
         theme = getHFTheme(null)
         updateDimmer(overlayBgColorChoice, transparency)

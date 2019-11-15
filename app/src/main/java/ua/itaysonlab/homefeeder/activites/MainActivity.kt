@@ -1,11 +1,15 @@
 package ua.itaysonlab.homefeeder.activites
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -61,5 +65,37 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         if (!isNotificationServiceEnabled()) requestNotificationPermission()
+        requestStoragePermission()
+    }
+
+    private fun requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            showStorageAlert()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                findNavController(R.id.nav_host_fragment).navigate(R.id.navigation_settings)
+            } else {
+                showStorageAlert()
+            }
+        }
+    }
+
+    private fun showStorageAlert() {
+        MaterialAlertDialogBuilder(this, R.style.MDialog).apply {
+            setTitle(R.string.storage_alert)
+            setMessage(R.string.storage_desc)
+            setPositiveButton(R.string.storage_action) { _, _ ->
+                ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+            }
+            setNeutralButton(R.string.cancel, null)
+        }.show()
     }
 }

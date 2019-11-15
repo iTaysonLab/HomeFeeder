@@ -18,7 +18,7 @@
     <string name="pref_tg_author">Developer</string>
     <string name="pref_git">Source code</string>
 
-    <string name="pref_cat_overlay">Overlay</string>
+    <string name="pref_cat_overlay">Appearance</string>
     <string name="pref_transparency">Overlay background transparency</string>
     <string name="pref_ovr_theme">Overlay theme</string>
     <string name="pref_compact">Compact item layout</string>
@@ -33,6 +33,10 @@
     <string name="allow_notify_desc">HomeFeeder needs \"Notification access\" permission to show your notifications in a overlay. Data is processed only on-device and won\'t be sent from it.\n\nPlease note that some features of HomeFeeder might be unavailable until you grant the permission.</string>
     <string name="allow_notify_to_settings">Open settings</string>
     <string name="cancel">Cancel</string>
+
+    <string name="storage_alert">Storage permission</string>
+    <string name="storage_desc">HomeFeeder needs \"Read external storage\" permission to save various data and show accurate previews.\n\nThis permission is not needed, but recommended for using.</string>
+    <string name="storage_action">Request</string>
 
     <string name="overlay_no_permission">No permission granted</string>
     <string name="overlay_reload">Click here to reload</string>

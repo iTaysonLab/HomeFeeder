@@ -285,6 +285,10 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         var computeAlphaScroll = float
         if (currentTransparencyValue == "half" && float > 0.5f) {
             computeAlphaScroll = 0.5f
+        } else if (currentTransparencyValue == "less_half" && float > 0.25f) {
+            computeAlphaScroll = 0.25f
+        } else if (currentTransparencyValue == "more_half" && float > 0.75f) {
+            computeAlphaScroll = 0.75f
         }
 
         val color = (computeAlphaScroll * 255.0f).toInt() shl 24 or (bgColor and 0x00ffffff)

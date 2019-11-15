@@ -9,7 +9,9 @@
 
     <array name="pref_overlay_transparency_desc">
         <item>Непрозрачный</item>
-        <item>Полупрозрачный</item>
+        <item>25\uff05</item>
+        <item>50\uff05</item>
+        <item>75\uff05</item>
         <item>Прозрачный</item>
     </array>
 

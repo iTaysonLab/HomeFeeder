@@ -14,7 +14,7 @@
     <string name="pref_tg_author">Разработчик</string>
     <string name="pref_git">Исходный код</string>
 
-    <string name="pref_cat_overlay">Лента</string>
+    <string name="pref_cat_overlay">Внешний вид</string>
     <string name="pref_transparency">Прозрачность фона</string>
     <string name="pref_ovr_theme">Тема</string>
     <string name="pref_compact">Компактные элементы списка</string>
@@ -29,6 +29,10 @@
     <string name="allow_notify_desc">HomeFeeder нужно разрешение \"Доступ к уведомлениям\" для показа уведомлений в ленте. Данные обрабатываются на устройстве и только на нем.\n\nВозможно, некоторые функции HomeFeeder могут быть недоступными до выдачи разрешения.</string>
     <string name="allow_notify_to_settings">Настройки</string>
     <string name="cancel">Отменить</string>
+
+    <string name="storage_alert">Доступ к памяти</string>
+    <string name="storage_desc">HomeFeeder нужно разрешение \"Память\" для точного предпросмотра и сохранения данных.\n\nДанное разрешение необязательно, но рекомендуется для нормального использования.</string>
+    <string name="storage_action">Запросить</string>
 
     <string name="overlay_no_permission">Разрешение не выдано</string>
     <string name="overlay_reload">Нажмите для перезагрузки</string>
