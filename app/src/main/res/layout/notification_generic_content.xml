@@ -18,7 +18,7 @@
                 tools:src="@drawable/ic_settings_24" />
 
             <TextView
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/notification_topitems_padding"
                 android:id="@+id/not_app_name"
                 android:layout_width="wrap_content"
                 android:gravity="center_vertical"
@@ -27,7 +27,7 @@
                 tools:text="App name" />
 
             <TextView
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/notification_topitems_padding"
                 android:id="@+id/not_app_subtitle"
                 android:layout_width="wrap_content"
                 android:maxLines="1"
@@ -39,7 +39,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="@dimen/notification_topitems_padding"
             android:id="@+id/not_app_date"
             android:layout_width="wrap_content"
             android:textAllCaps="true"
