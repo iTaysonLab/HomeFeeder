@@ -44,6 +44,11 @@ object Theming {
     }
 
     enum class Colors(val position: Int) {
-        CARD_BG(0), TEXT_COLOR_PRIMARY(1), TEXT_COLOR_SECONDARY(2), ACCENT_COLOR(3), OVERLAY_BG(4), IS_LIGHT(5)
+        CARD_BG(0),
+        TEXT_COLOR_PRIMARY(1),
+        TEXT_COLOR_SECONDARY(2),
+        ACCENT_COLOR(3),
+        OVERLAY_BG(4),
+        IS_LIGHT(5)
     }
 }

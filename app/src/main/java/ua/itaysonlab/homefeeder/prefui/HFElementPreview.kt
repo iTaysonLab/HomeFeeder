@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.notification_simple.view.*
 import kotlinx.android.synthetic.main.preview.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
-import ua.itaysonlab.homefeeder.isDark
+import ua.itaysonlab.homefeeder.kt.isDark
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.theming.Theming
 

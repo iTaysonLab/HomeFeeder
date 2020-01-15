@@ -9,10 +9,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.IBinder
-import android.provider.Settings
 import android.util.SparseIntArray
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -25,8 +23,10 @@ import kotlinx.android.synthetic.main.overlay_layout.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
-import ua.itaysonlab.homefeeder.isDark
-import ua.itaysonlab.homefeeder.isLight
+import ua.itaysonlab.homefeeder.kt.isDark
+import ua.itaysonlab.homefeeder.kt.isLight
+import ua.itaysonlab.homefeeder.kt.isNotificationServiceGranted
+import ua.itaysonlab.homefeeder.overlay.launcherapi.LauncherAPI
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationAdapter
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationListener
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationWrapper
@@ -41,29 +41,25 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     override fun getNotificationListener(): NotificationListener {
         return mService
     }
+    
+    companion object {
+        const val LOG_TAG = "OverlayKt"
+    }
+
+    private var apiInstance = LauncherAPI()
 
     private lateinit var rootView: View
     private lateinit var adapter: NotificationAdapter
     private lateinit var mService: NotificationListener
     private var mBound = false
 
-    private var isLauncherDarkTheme = false
     private var currentTransparencyValue = HFPreferences.overlayTransparency
     private var shouldUseSN = false
     private var isSNApplied = false
     private var currentHFTheme = Theming.defaultDarkThemeColors
 
-    @ColorInt private var backgroundColorHint = Color.BLACK
-    @ColorInt private var backgroundColorHintSecondary = Color.BLACK
-    @ColorInt private var backgroundColorHintTertiary = Color.BLACK
-
     private var cardBgColorChoice = HFPreferences.cardBackground
     private var overlayBgColorChoice = HFPreferences.overlayBackground
-
-    private val permissionGranted: Boolean get() {
-        val enabledNotificationListeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
-        return !(enabledNotificationListeners == null || !enabledNotificationListeners.contains(packageName))
-    }
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -85,9 +81,9 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
                 "white" -> Color.WHITE
                 "dark" -> ContextCompat.getColor(context, R.color.bg_dark)
                 "amoled" -> Color.BLACK
-                "launcher_primary" -> backgroundColorHint
-                "launcher_secondary" -> backgroundColorHintSecondary
-                "launcher_tertiary" -> backgroundColorHintTertiary
+                "launcher_primary" -> apiInstance.backgroundColorHint
+                "launcher_secondary" -> apiInstance.backgroundColorHintSecondary
+                "launcher_tertiary" -> apiInstance.backgroundColorHintTertiary
                 else -> Color.BLACK
             }
 
@@ -111,9 +107,9 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
                     "white" -> ContextCompat.getColor(context, R.color.card_bg)
                     "dark" -> ContextCompat.getColor(context, R.color.card_bg_dark)
                     "amoled" -> Color.BLACK
-                    "launcher_primary" -> backgroundColorHint
-                    "launcher_secondary" -> backgroundColorHintSecondary
-                    "launcher_tertiary" -> backgroundColorHintTertiary
+                    "launcher_primary" -> apiInstance.backgroundColorHint
+                    "launcher_secondary" -> apiInstance.backgroundColorHintSecondary
+                    "launcher_tertiary" -> apiInstance.backgroundColorHintTertiary
                     else -> Color.BLACK
                 }
             )
@@ -123,7 +119,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     private fun getHFTheme(force: String?): SparseIntArray {
         val theme = when (force ?: HFPreferences.overlayTheme) {
             "auto_launcher" -> {
-                if (isLauncherDarkTheme) {
+                if (apiInstance.darkTheme) {
                     Theming.defaultDarkThemeColors
                 } else {
                     Theming.defaultLightThemeColors
@@ -141,19 +137,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     override fun onOptionsUpdated(bundle: Bundle) {
         super.onOptionsUpdated(bundle)
-        if (HFPreferences.contentDebugging) {
-            bundle.keySet().forEach {
-                val item = bundle.get(it)
-                item ?: return@forEach
-                Logger.log(javaClass.simpleName, "key: $it, data: $item")
-            }
-        }
-
-        isLauncherDarkTheme = bundle.getBoolean("is_background_dark", true)
-        backgroundColorHint = bundle.getInt("background_color_hint", Color.BLACK)
-        backgroundColorHintSecondary = bundle.getInt("background_secondary_color_hint", Color.BLACK)
-        backgroundColorHintTertiary = bundle.getInt("background_tertiary_color_hint", Color.BLACK)
-
+        apiInstance = LauncherAPI(bundle)
         updateTheme()
     }
 
@@ -164,7 +148,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     private fun updateStubUi() {
-        if (!permissionGranted) {
+        if (!this.isNotificationServiceGranted()) {
             rootView.nas_title.setTextColor(currentHFTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
             rootView.nas_text.setTextColor(currentHFTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
             rootView.nas_icon.imageTintList = ColorStateList.valueOf(currentHFTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
@@ -211,7 +195,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             startActivity(Intent(HFApplication.ACTION_MANAGE_LISTENERS))
         }
         rootView.nas_reload.setOnClickListener {
-            if (permissionGranted) {
+            if (this.isNotificationServiceGranted()) {
                 bindService()
                 rootView.overlay_root.visibility = View.VISIBLE
                 rootView.no_access_stub.visibility = View.GONE
@@ -229,7 +213,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         initRecyclerView()
         initHeader()
 
-        if (!permissionGranted) {
+        if (!this.isNotificationServiceGranted()) {
             initPermissionStub()
         } else {
             bindService()
@@ -239,12 +223,11 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     private fun refreshNotifications() {
-        //rootView.swipe_to_refresh.isRefreshing = true
         if (mBound) {
             val list = mService.notifications
             if (HFPreferences.contentDebugging) {
                 list.forEach {
-                    Logger.log(javaClass.simpleName, it.toString())
+                    Logger.log(LOG_TAG, it.toString())
                 }
             }
             adapter.update(list)
@@ -301,21 +284,21 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     override fun onNewNotification(notification: NotificationWrapper) {
         if (HFPreferences.debugging) {
-            Logger.log(javaClass.simpleName, "Notification has been posted by: ${notification.applicationName}")
+            Logger.log(LOG_TAG, "Notification has been posted by: ${notification.applicationName}")
         }
         refreshNotifications()
     }
 
     override fun onNotificationRemove(notification: NotificationWrapper) {
         if (HFPreferences.debugging) {
-            Logger.log(javaClass.simpleName, "Notification has been removed by: ${notification.applicationName}")
+            Logger.log(LOG_TAG, "Notification has been removed by: ${notification.applicationName}")
         }
         refreshNotifications()
     }
 
     override fun onClientMessage(action: String) {
         if (HFPreferences.debugging) {
-            Logger.log(javaClass.simpleName, "New message by OverlayBridge: $action")
+            Logger.log(LOG_TAG, "New message by OverlayBridge: $action")
         }
     }
 

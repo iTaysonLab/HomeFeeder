@@ -7,23 +7,27 @@ import android.os.Binder
 import android.os.IBinder
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import ua.itaysonlab.homefeeder.kt.dump
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.utils.Logger
 import java.util.ArrayList
 
 class NotificationListener: NotificationListenerService() {
+    companion object {
+        const val LOG_TAG = "NotificationListener"
+    }
+
     private val binder = LocalBinder()
     private val callbacks = ArrayList<NLCallback>()
+
     val notifications: List<NotificationWrapper> get() {
         val list = ArrayList<NotificationWrapper>()
         for (sbn in activeNotifications) {
             if (sbn.isOngoing && !sbn.notification.extras.containsKey(Notification.EXTRA_MEDIA_SESSION)) continue
-            if (sbn.notification.extras.getString(Notification.EXTRA_TEMPLATE) == "android.app.Notification\$MessagingStyle") continue // some dirty fixes
+            if (sbn.notification.extras.getString(Notification.EXTRA_TEMPLATE) == "android.app.Notification\$MessagingStyle") continue // TODO: make MessagingStyle
             if (HFPreferences.contentDebugging) {
                 Logger.log(javaClass.simpleName, "===========")
-                for (s in sbn.notification.extras.keySet()) {
-                    if (sbn.notification.extras.get(s) != null) Logger.log(javaClass.simpleName, "key: " + s + ", data: " + sbn.notification.extras.get(s)!!.toString())
-                }
+                sbn.notification.extras.dump(LOG_TAG)
             }
             list.add(wrapNotification(sbn))
         }

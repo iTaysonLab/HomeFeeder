@@ -1,7 +1,6 @@
 package ua.itaysonlab.homefeeder.overlay.notification
 
 import android.app.PendingIntent
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.util.SparseIntArray
 import android.view.LayoutInflater
@@ -18,11 +17,8 @@ import kotlinx.android.synthetic.main.notification_generic_content.view.not_titl
 import kotlinx.android.synthetic.main.notification_media.view.*
 import kotlinx.android.synthetic.main.notification_simple.view.ibg_icon
 import kotlinx.android.synthetic.main.notification_simple.view.iforeground
-import kotlinx.android.synthetic.main.overlay_header.view.*
-import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
-import ua.itaysonlab.homefeeder.activites.MainActivity
-import ua.itaysonlab.homefeeder.isDark
+import ua.itaysonlab.homefeeder.kt.isDark
 import ua.itaysonlab.homefeeder.overlay.rvutils.StackBlur
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.theming.Theming
