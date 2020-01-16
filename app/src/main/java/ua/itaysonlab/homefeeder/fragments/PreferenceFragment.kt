@@ -1,5 +1,6 @@
 package ua.itaysonlab.homefeeder.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.preference.*
@@ -8,6 +9,7 @@ import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
 import ua.itaysonlab.homefeeder.fragments.base.FixedPreferencesFragment
+import ua.itaysonlab.homefeeder.kt.isNotificationServiceGranted
 import ua.itaysonlab.homefeeder.prefui.HFElementPreview
 
 class PreferenceFragment : FixedPreferencesFragment() {
@@ -21,7 +23,7 @@ class PreferenceFragment : FixedPreferencesFragment() {
 
     private fun bindPermissionHeader() {
         val permission = findPreference<Preference>("hf_permission")!!
-        if ((activity as MainActivity).isNotificationServiceEnabled()) {
+        if (activity!!.isNotificationServiceGranted()) {
             permission.setIcon(R.drawable.ic_notifications_24)
             permission.setSummary(R.string.allow_notify_pref_granted)
         } else {
@@ -37,12 +39,20 @@ class PreferenceFragment : FixedPreferencesFragment() {
 
         val theme = findPreference<ListPreference>("ovr_theme")!!
         val transparency = findPreference<ListPreference>("ovr_transparency")!!
-        val compact = findPreference<SwitchPreference>("ovr_compact")!!
-
         val overlayBackground = findPreference<ListPreference>("ovr_bg")!!
         val cardBackground = findPreference<ListPreference>("ovr_card_bg")!!
 
+        val compact = findPreference<SwitchPreference>("ovr_compact")!!
+        val sysColors = findPreference<SwitchPreference>("ovr_syscolors")!!
+
         val preview = findPreference<HFElementPreview>("preview")!!
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
+            sysColors.apply {
+                isEnabled = false
+                setSummary(R.string.pref_syscolors_disabled)
+            }
+        }
 
         theme.summaryProvider = summaryProviderInstance
         transparency.summaryProvider = summaryProviderInstance
@@ -64,6 +74,11 @@ class PreferenceFragment : FixedPreferencesFragment() {
         compact.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             preview.applyCompact(newValue as Boolean)
             HFApplication.bridge.getCallback()?.applyCompactCard(newValue)
+            true
+        }
+
+        sysColors.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+            HFApplication.bridge.getCallback()?.applySysColors(newValue as Boolean)
             true
         }
 

@@ -45,4 +45,10 @@
 
     <string name="fsource_notifications">Notifications</string>
     <string name="fsource_weather">Weather</string>
+
+    <string name="pref_syscolors">Use system wallpaper colors</string>
+    <string name="pref_syscolors_desc">instead of \"Launcher:\" options</string>
+    <string name="pref_syscolors_disabled">Requires Android 8.1 or newer</string>
+
+    <string name="action_reload">Reload</string>
 </resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_actions_list_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/vkim_bg_overlay"
+    android:elevation="4dp"
+    android:backgroundTint="?android:windowBackground"
+    android:padding="16dp">
+
+    <ua.itaysonlab.replica.vkpopup.VkLibActionsListView
+        android:id="@+id/dialog_actions_list_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fadingEdge="none"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:vklib_alv_dividerColor="?android:textColorSecondary"
+        app:vklib_alv_dividerHeight="16dp"
+        app:vklib_alv_dividerSize="0.5dp"
+        app:vklib_alv_optionBackground="?selectableItemBackground"
+        app:vklib_alv_optionIconLabelSpace="20dp"
+        app:vklib_alv_optionIconTint="?colorAccent"
+        app:vklib_alv_optionLabelTextColor="?android:textColorPrimary"
+        app:vklib_alv_optionLabelTextSize="16sp"
+        app:vklib_alv_optionPaddingEnd="20dp"
+        app:vklib_alv_optionPaddingStart="20dp" />
+</LinearLayout>

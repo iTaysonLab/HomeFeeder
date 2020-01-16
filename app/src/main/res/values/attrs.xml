@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <declare-styleable name="VkLibActionsListView">
+        <attr name="vklib_alv_dividerColor" format="color" />
+        <attr name="vklib_alv_dividerHeight" format="dimension" />
+        <attr name="vklib_alv_dividerSize" format="dimension" />
+        <attr name="vklib_alv_optionBackground" format="reference" />
+        <attr name="vklib_alv_optionIconLabelSpace" format="dimension" />
+        <attr name="vklib_alv_optionIconTint" format="color" />
+        <attr name="vklib_alv_optionLabelTextColor" format="color" />
+        <attr name="vklib_alv_optionLabelTextSize" format="dimension" />
+        <attr name="vklib_alv_optionPaddingEnd" format="dimension" />
+        <attr name="vklib_alv_optionPaddingStart" format="dimension" />
+    </declare-styleable>
+</resources>

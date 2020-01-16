@@ -35,14 +35,14 @@ class LauncherAPI(bundle: Bundle = Bundle()) {
 
     /**
      * Secondary wallpaper color.
-     * Only on Librechair.
+     * Only on Lawnchair (and Librechair too).
      */
     @ColorInt
     var backgroundColorHintSecondary = Color.BLACK
 
     /**
      * Tertiary wallpaper color.
-     * Like [backgroundColorHintSecondary], available only on Librechair.
+     * Available only on Librechair.
      */
     @ColorInt
     var backgroundColorHintTertiary = Color.BLACK

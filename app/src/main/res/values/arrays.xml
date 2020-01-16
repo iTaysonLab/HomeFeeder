@@ -9,10 +9,18 @@
 
     <array name="pref_overlay_transparency_desc">
         <item>Non-transparent</item>
-        <item>25\uff05</item>
-        <item>50\uff05</item>
         <item>75\uff05</item>
+        <item>50\uff05</item>
+        <item>25\uff05</item>
         <item>Transparent</item>
+    </array>
+
+    <array name="pref_overlay_transparency_values">
+        <item>non_transparent</item>
+        <item>more_half</item>
+        <item>half</item>
+        <item>less_half</item>
+        <item>transparent</item>
     </array>
 
     <array name="pref_color_variations">
@@ -33,14 +41,6 @@
         <item>launcher_primary</item>
         <item>launcher_secondary</item>
         <item>launcher_tertiary</item>
-    </array>
-
-    <array name="pref_overlay_transparency_values">
-        <item>non_transparent</item>
-        <item>less_half</item>
-        <item>half</item>
-        <item>more_half</item>
-        <item>transparent</item>
     </array>
 
     <array name="pref_overlay_theme_values">

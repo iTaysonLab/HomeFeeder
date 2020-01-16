@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.preview.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.kt.isDark
+import ua.itaysonlab.homefeeder.overlay.launcherapi.OverlayThemeHolder
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.theming.Theming
 
@@ -34,8 +35,8 @@ class HFElementPreview @JvmOverloads constructor(
         widgetLayoutResource = R.layout.preview
     }
 
-    lateinit var view: View
-    lateinit var layoutInflater: LayoutInflater
+    private lateinit var view: View
+    private lateinit var layoutInflater: LayoutInflater
 
     private var overlayBgColorChoice = HFPreferences.overlayBackground
     private var cardBgColorChoice = HFPreferences.cardBackground
@@ -77,6 +78,9 @@ class HFElementPreview @JvmOverloads constructor(
                 "white" -> ContextCompat.getColor(context, R.color.card_bg)
                 "dark" -> ContextCompat.getColor(context, R.color.card_bg_dark)
                 "amoled" -> Color.BLACK
+                "launcher_primary" -> OverlayThemeHolder.primaryWallColor()
+                "launcher_secondary" -> OverlayThemeHolder.secondaryWallColor()
+                "launcher_tertiary" -> OverlayThemeHolder.tertiaryWallColor()
                 else -> Color.BLACK
             })
         }
@@ -100,6 +104,9 @@ class HFElementPreview @JvmOverloads constructor(
                     "white" -> ContextCompat.getColor(context, R.color.card_bg)
                     "dark" -> ContextCompat.getColor(context, R.color.card_bg_dark)
                     "amoled" -> Color.BLACK
+                    "launcher_primary" -> OverlayThemeHolder.primaryWallColor()
+                    "launcher_secondary" -> OverlayThemeHolder.secondaryWallColor()
+                    "launcher_tertiary" -> OverlayThemeHolder.tertiaryWallColor()
                     else -> Color.BLACK
                 }
             )

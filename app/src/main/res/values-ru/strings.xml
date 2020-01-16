@@ -41,4 +41,10 @@
 
     <string name="fsource_notifications">Уведомления</string>
     <string name="fsource_weather">Погода</string>
+
+    <string name="pref_syscolors">Использовать системные цвета обоев</string>
+    <string name="pref_syscolors_desc">вместо опций \"Из лаунчера:\"</string>
+    <string name="pref_syscolors_disabled">Требуется Android 8.1 или новее</string>
+
+    <string name="action_reload">Перезагрузить</string>
 </resources>

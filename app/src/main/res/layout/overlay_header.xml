@@ -24,7 +24,7 @@
         android:layout_gravity="center"
         android:id="@+id/header_preferences"
         android:background="?selectableItemBackground"
-        android:src="@drawable/ic_settings_24"
+        android:src="@drawable/ic_more_vertical_24"
         android:tint="@color/textColorPrimary"
         android:layout_height="24dp" />
 </LinearLayout>

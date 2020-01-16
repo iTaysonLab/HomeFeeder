@@ -26,6 +26,11 @@
             android:defaultValue="false"
             android:key="ovr_compact"
             android:title="@string/pref_compact" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ovr_syscolors"
+            android:title="@string/pref_syscolors"
+            android:summary="@string/pref_syscolors_desc" />
         <ListPreference
             android:defaultValue="theme"
             android:entries="@array/pref_color_variations"

@@ -5,37 +5,38 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.IBinder
-import android.util.SparseIntArray
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.libraries.gsa.d.a.OverlayController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.overlay_header.view.*
 import kotlinx.android.synthetic.main.overlay_layout.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
+import ua.itaysonlab.homefeeder.kt.clearLightFlags
 import ua.itaysonlab.homefeeder.kt.isDark
-import ua.itaysonlab.homefeeder.kt.isLight
 import ua.itaysonlab.homefeeder.kt.isNotificationServiceGranted
+import ua.itaysonlab.homefeeder.kt.setLightFlags
 import ua.itaysonlab.homefeeder.overlay.launcherapi.LauncherAPI
+import ua.itaysonlab.homefeeder.overlay.launcherapi.OverlayThemeHolder
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationAdapter
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationListener
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationWrapper
 import ua.itaysonlab.homefeeder.overlay.rvutils.SwipeToDeleteCallback
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
-import ua.itaysonlab.homefeeder.utils.Logger
-import ua.itaysonlab.homefeeder.utils.StatusbarHelper
 import ua.itaysonlab.homefeeder.theming.Theming
+import ua.itaysonlab.homefeeder.utils.Logger
 import ua.itaysonlab.homefeeder.utils.OverlayBridge
+import ua.itaysonlab.replica.vkpopup.DialogActionsVcByPopup
+import ua.itaysonlab.replica.vkpopup.PopupItem
 
 class OverlayKt(val context: Context): OverlayController(context, R.style.AppTheme, R.style.WindowTheme), NotificationListener.NLCallback, OverlayBridge.OverlayBridgeCallback {
     override fun getNotificationListener(): NotificationListener {
@@ -46,20 +47,13 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         const val LOG_TAG = "OverlayKt"
     }
 
-    private var apiInstance = LauncherAPI()
+    var apiInstance = LauncherAPI()
+    private lateinit var themeHolder: OverlayThemeHolder
 
     private lateinit var rootView: View
     private lateinit var adapter: NotificationAdapter
     private lateinit var mService: NotificationListener
     private var mBound = false
-
-    private var currentTransparencyValue = HFPreferences.overlayTransparency
-    private var shouldUseSN = false
-    private var isSNApplied = false
-    private var currentHFTheme = Theming.defaultDarkThemeColors
-
-    private var cardBgColorChoice = HFPreferences.cardBackground
-    private var overlayBgColorChoice = HFPreferences.overlayBackground
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -75,49 +69,8 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         }
     }
 
-    private fun injectTheme(theme: SparseIntArray) {
-        if (overlayBgColorChoice != "theme") {
-            val choice = when (overlayBgColorChoice) {
-                "white" -> Color.WHITE
-                "dark" -> ContextCompat.getColor(context, R.color.bg_dark)
-                "amoled" -> Color.BLACK
-                "launcher_primary" -> apiInstance.backgroundColorHint
-                "launcher_secondary" -> apiInstance.backgroundColorHintSecondary
-                "launcher_tertiary" -> apiInstance.backgroundColorHintTertiary
-                else -> Color.BLACK
-            }
-
-            theme.put(
-                Theming.Colors.OVERLAY_BG.position, choice
-            )
-
-            shouldUseSN = choice.isLight()
-        } else {
-            shouldUseSN = theme.get(Theming.Colors.IS_LIGHT.position) == 1
-        }
-
-        if (!shouldUseSN && isSNApplied) {
-            isSNApplied = false
-            StatusbarHelper.removeLight(getWindow().decorView)
-        }
-
-        if (cardBgColorChoice != "theme") {
-            theme.put(
-                Theming.Colors.CARD_BG.position, when (cardBgColorChoice) {
-                    "white" -> ContextCompat.getColor(context, R.color.card_bg)
-                    "dark" -> ContextCompat.getColor(context, R.color.card_bg_dark)
-                    "amoled" -> Color.BLACK
-                    "launcher_primary" -> apiInstance.backgroundColorHint
-                    "launcher_secondary" -> apiInstance.backgroundColorHintSecondary
-                    "launcher_tertiary" -> apiInstance.backgroundColorHintTertiary
-                    else -> Color.BLACK
-                }
-            )
-        }
-    }
-
-    private fun getHFTheme(force: String?): SparseIntArray {
-        val theme = when (force ?: HFPreferences.overlayTheme) {
+    private fun setTheme(force: String?) {
+        themeHolder.setTheme(when (force ?: HFPreferences.overlayTheme) {
             "auto_launcher" -> {
                 if (apiInstance.darkTheme) {
                     Theming.defaultDarkThemeColors
@@ -128,11 +81,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             "auto_system" -> Theming.getThemeBySystem(context)
             "dark" -> Theming.defaultDarkThemeColors
             else -> Theming.defaultLightThemeColors
-        }
-
-        injectTheme(theme)
-
-        return theme
+        })
     }
 
     override fun onOptionsUpdated(bundle: Bundle) {
@@ -142,22 +91,22 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     private fun updateTheme(force: String? = null) {
-        currentHFTheme = getHFTheme(force)
+        setTheme(force)
         updateStubUi()
-        adapter.setTheme(currentHFTheme)
+        adapter.setTheme(themeHolder.currentTheme)
     }
 
     private fun updateStubUi() {
         if (!this.isNotificationServiceGranted()) {
-            rootView.nas_title.setTextColor(currentHFTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_text.setTextColor(currentHFTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
-            rootView.nas_icon.imageTintList = ColorStateList.valueOf(currentHFTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_reload.setTextColor(currentHFTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_action.setBackgroundColor(currentHFTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_action.setTextColor(currentHFTheme.get(Theming.Colors.CARD_BG.position))
+            rootView.nas_title.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+            rootView.nas_text.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
+            rootView.nas_icon.imageTintList = ColorStateList.valueOf(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+            rootView.nas_reload.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+            rootView.nas_action.setBackgroundColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+            rootView.nas_action.setTextColor(themeHolder.currentTheme.get(Theming.Colors.CARD_BG.position))
         }
 
-        val theme = if (currentHFTheme.get(Theming.Colors.OVERLAY_BG.position).isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
+        val theme = if (themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position).isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
         rootView.header_preferences.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
         rootView.header_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
     }
@@ -184,8 +133,37 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     private fun initHeader() {
         rootView.header_preferences.setOnClickListener {
-            HFApplication.instance.startActivity(Intent(HFApplication.instance, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            callMenuPopup(it)
         }
+    }
+
+    private fun callMenuPopup(view: View) {
+        val popup = DialogActionsVcByPopup(view)
+        popup.a(createMenuList(), {
+            it.first.backgroundTintList = ColorStateList.valueOf(themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position))
+            it.second.apply {
+                setActionLabelTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+                setDividerColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
+                setActionIconTint(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+            }
+        }) {
+            popup.dismiss()
+            when (it.id) {
+                "config" -> {
+                    HFApplication.instance.startActivity(Intent(HFApplication.instance, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                }
+                "reload" -> {
+                    refreshNotifications()
+                }
+            }
+        }
+    }
+
+    private fun createMenuList(): List<PopupItem> {
+        return listOf(
+            PopupItem(R.drawable.ic_settings_24, R.string.title_settings, 0, "config"),
+            PopupItem(R.drawable.ic_replay_24, R.string.action_reload, 0, "reload")
+        )
     }
 
     private fun initPermissionStub() {
@@ -210,6 +188,8 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         getWindow().decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         rootView = View.inflate(ContextThemeWrapper(this, R.style.AppTheme), R.layout.overlay_layout, this.container)
 
+        themeHolder = OverlayThemeHolder(context,this)
+
         initRecyclerView()
         initHeader()
 
@@ -225,11 +205,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     private fun refreshNotifications() {
         if (mBound) {
             val list = mService.notifications
-            if (HFPreferences.contentDebugging) {
-                list.forEach {
-                    Logger.log(LOG_TAG, it.toString())
-                }
-            }
             adapter.update(list)
         }
         rootView.swipe_to_refresh.isRefreshing = false
@@ -247,34 +222,24 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     override fun onScroll(f: Float) {
         super.onScroll(f)
+        if (themeHolder.isTransparentBg) return
+
         val float = if (f > 1) 1f else f
 
-        if (currentTransparencyValue == "transparent") return
-
         if (f > 0.7f) {
-            if (shouldUseSN && !isSNApplied) {
-                isSNApplied = true
-                StatusbarHelper.setLight(getWindow().decorView)
+            if (themeHolder.shouldUseSN && !themeHolder.isSNApplied) {
+                themeHolder.isSNApplied = true
+                window.decorView.setLightFlags()
             }
         } else {
-            if (shouldUseSN && isSNApplied) {
-                isSNApplied = false
-                StatusbarHelper.removeLight(getWindow().decorView)
+            if (themeHolder.shouldUseSN && themeHolder.isSNApplied) {
+                themeHolder.isSNApplied = false
+                window.decorView.clearLightFlags()
             }
         }
 
-        val bgColor = currentHFTheme.get(Theming.Colors.OVERLAY_BG.position)
-
-        var computeAlphaScroll = float
-        if (currentTransparencyValue == "half" && float > 0.5f) {
-            computeAlphaScroll = 0.5f
-        } else if (currentTransparencyValue == "less_half" && float > 0.25f) {
-            computeAlphaScroll = 0.25f
-        } else if (currentTransparencyValue == "more_half" && float > 0.75f) {
-            computeAlphaScroll = 0.75f
-        }
-
-        val color = (computeAlphaScroll * 255.0f).toInt() shl 24 or (bgColor and 0x00ffffff)
+        val bgColor = themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position)
+        val color = (themeHolder.getScrollAlpha(float) * 255.0f).toInt() shl 24 or (bgColor and 0x00ffffff)
         getWindow().setBackgroundDrawable(ColorDrawable(color))
     }
 
@@ -307,16 +272,16 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     override fun applyNewTransparency(value: String) {
-        currentTransparencyValue = value
+        themeHolder.transparencyBgPref = value
     }
 
     override fun applyNewCardBg(value: String) {
-        cardBgColorChoice = value
+        themeHolder.cardBgPref = value
         updateTheme()
     }
 
     override fun applyNewOverlayBg(value: String) {
-        overlayBgColorChoice = value
+        themeHolder.overlayBgPref = value
         updateTheme()
     }
 
@@ -324,7 +289,13 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         adapter = NotificationAdapter()
         adapter.setHasStableIds(true)
         adapter.setCompact(value)
+        adapter.setTheme(themeHolder.currentTheme)
         rootView.recycler.adapter = adapter
         refreshNotifications()
+    }
+
+    override fun applySysColors(value: Boolean) {
+        themeHolder.systemColors = value
+        updateTheme()
     }
 }
