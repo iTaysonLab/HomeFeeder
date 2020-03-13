@@ -1,0 +1,3 @@
+[submodule "homefeeder-sdk"]
+	path = homefeeder-sdk
+	url = https://github.com/iTaysonLab/homefeeder-sdk/
