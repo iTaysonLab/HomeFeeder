@@ -26,15 +26,25 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/iforeground"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
+            android:paddingTop="@dimen/feed_card_vertical_padding"
+            android:paddingBottom="@dimen/feed_card_vertical_padding"
             android:background="@color/cardBg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <include layout="@layout/notification_generic_content" />
+            <HorizontalScrollView
+                android:id="@+id/button_valley"
+                android:layout_marginTop="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/button_valley_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </HorizontalScrollView>
         </LinearLayout>
     </FrameLayout>
 </com.google.android.material.card.MaterialCardView>

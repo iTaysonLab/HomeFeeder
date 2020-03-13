@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="rl_margin">16dp</dimen>
+    <dimen name="rl_margin_less">14dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -8,4 +9,7 @@
     <dimen name="notification_topitems_padding">4dp</dimen>
     <dimen name="dialog_rounding">8dp</dimen>
     <dimen name="preview_height">140dp</dimen>
+
+    <dimen name="feed_card_horizontal_padding">18dp</dimen>
+    <dimen name="feed_card_vertical_padding">12dp</dimen>
 </resources>

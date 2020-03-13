@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="globalAccent">#0c80a7</color>
+    <color name="globalAccent">#4285f4</color>
 
     <color name="overlayBg">#A0FFFFFF</color>
     <color name="bg">#ffffff</color>

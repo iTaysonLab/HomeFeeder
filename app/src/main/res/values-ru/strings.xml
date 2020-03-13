@@ -1,6 +1,7 @@
 <resources>
     <string name="title_settings">Настройки</string>
     <string name="title_about">О приложении</string>
+    <string name="title_sources">Источники данных</string>
 
     <string name="date_ago_now">сейчас</string>
     <string name="date_at">в</string>

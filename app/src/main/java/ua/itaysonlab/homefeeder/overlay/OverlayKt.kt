@@ -10,14 +10,13 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.libraries.gsa.d.a.OverlayController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.overlay_header.view.*
 import kotlinx.android.synthetic.main.overlay_layout.view.*
+import ua.itaysonlab.hfsdk.FeedItem
+import ua.itaysonlab.hfsdk.IFeedInterfaceCallback
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
@@ -25,12 +24,12 @@ import ua.itaysonlab.homefeeder.kt.clearLightFlags
 import ua.itaysonlab.homefeeder.kt.isDark
 import ua.itaysonlab.homefeeder.kt.isNotificationServiceGranted
 import ua.itaysonlab.homefeeder.kt.setLightFlags
+import ua.itaysonlab.homefeeder.overlay.feed.FeedAdapter
 import ua.itaysonlab.homefeeder.overlay.launcherapi.LauncherAPI
 import ua.itaysonlab.homefeeder.overlay.launcherapi.OverlayThemeHolder
-import ua.itaysonlab.homefeeder.overlay.notification.NotificationAdapter
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationListener
 import ua.itaysonlab.homefeeder.overlay.notification.NotificationWrapper
-import ua.itaysonlab.homefeeder.overlay.rvutils.SwipeToDeleteCallback
+import ua.itaysonlab.homefeeder.pluginsystem.PluginConnector
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.theming.Theming
 import ua.itaysonlab.homefeeder.utils.Logger
@@ -51,9 +50,11 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     private lateinit var themeHolder: OverlayThemeHolder
 
     private lateinit var rootView: View
-    private lateinit var adapter: NotificationAdapter
+    private lateinit var adapter: FeedAdapter
     private lateinit var mService: NotificationListener
     private var mBound = false
+
+    private val list = mutableListOf<FeedItem>()
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -116,19 +117,19 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             refreshNotifications()
         }
 
-        adapter = NotificationAdapter()
+        adapter = FeedAdapter()
         adapter.setHasStableIds(true)
         rootView.recycler.layoutManager = LinearLayoutManager(context)
         rootView.recycler.adapter = adapter
 
-        val callback = object: SwipeToDeleteCallback(object: RecyclerItemTouchHelperListener {
+        /*val callback = object: SwipeToDeleteCallback(object: RecyclerItemTouchHelperListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
                 val notifyID = adapter.removeItem(position)
                 mService.requestNotificationDismiss(notifyID)
             }
         }) {}
         val helper = ItemTouchHelper(callback)
-        helper.attachToRecyclerView(rootView.recycler)
+        helper.attachToRecyclerView(rootView.recycler)*/
     }
 
     private fun initHeader() {
@@ -203,11 +204,14 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     private fun refreshNotifications() {
-        if (mBound) {
-            val list = mService.notifications
-            adapter.update(list)
+        list.clear()
+
+        PluginConnector.getFeedAsItLoads(0, { feed ->
+            list.addAll(feed)
+        }) {
+            adapter.replace(list)
+            rootView.swipe_to_refresh.isRefreshing = false
         }
-        rootView.swipe_to_refresh.isRefreshing = false
     }
 
     override fun onDestroy() {
@@ -286,9 +290,9 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     override fun applyCompactCard(value: Boolean) {
-        adapter = NotificationAdapter()
+        adapter = FeedAdapter()
         adapter.setHasStableIds(true)
-        adapter.setCompact(value)
+        //adapter.setCompact(value)
         adapter.setTheme(themeHolder.currentTheme)
         rootView.recycler.adapter = adapter
         refreshNotifications()

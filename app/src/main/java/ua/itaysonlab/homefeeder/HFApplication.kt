@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.core.graphics.drawable.toDrawable
+import ua.itaysonlab.homefeeder.pluginsystem.PluginFetcher
 import ua.itaysonlab.homefeeder.utils.OverlayBridge
 
 class HFApplication: Application() {
@@ -38,6 +39,10 @@ class HFApplication: Application() {
             }
         }
 
+        fun getSmallIcon(pkg: String): Drawable {
+            return instance.packageManager.getApplicationIcon(pkg)
+        }
+
         fun getLargeIcon(notification: Notification): BitmapDrawable? {
             return try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -55,5 +60,6 @@ class HFApplication: Application() {
         super.onCreate()
         Logger.log("Application", "Starting HomeFeeder ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})...")
         instance = this
+        PluginFetcher.init(instance)
     }
 }

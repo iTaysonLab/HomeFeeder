@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/rl_margin"
-    android:paddingEnd="@dimen/rl_margin"
+    android:paddingStart="@dimen/rl_margin_less"
+    android:paddingEnd="@dimen/rl_margin_less"
     android:paddingTop="4dp"
     android:paddingBottom="8dp"
     android:orientation="horizontal">
     <TextView
         android:layout_width="0dp"
-        android:text="@string/fsource_notifications"
+        android:text="@string/app_name"
         android:textColor="@color/textColorPrimary"
         android:textSize="26sp"
         android:layout_gravity="center"
         android:id="@+id/header_title"
         android:layout_weight="1"
         android:textStyle="bold"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:targetApi="p" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="24dp"

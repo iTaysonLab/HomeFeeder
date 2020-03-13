@@ -5,6 +5,11 @@
         <item name="colorAccent">@color/globalAccent</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Surface</item>
         <item name="alertDialogTheme">@style/ThemedAlertDialog</item>
+        <item name="materialCardViewStyle">@style/HFMaterialCard</item>
+    </style>
+
+    <style name="HFMaterialCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">8dp</item>
     </style>
 
     <style name="ThemedAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">

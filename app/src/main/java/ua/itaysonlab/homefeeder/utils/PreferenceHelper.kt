@@ -15,6 +15,20 @@ object PreferenceHelper {
         return prefs.getString(key, default)!!
     }
 
+    fun getSet(key: String): MutableSet<String> {
+        return prefs.getStringSet(key, mutableSetOf<String>())!!
+    }
+
+    fun setSet(key: String, set: MutableSet<String>) {
+        Logger.log("PH", "Putting $set to $key")
+        prefs.edit().apply {
+            remove(key)
+            commit()
+            putStringSet(key, set)
+            commit()
+        }
+    }
+
     fun get(key: String, default: Int): Int {
         return prefs.getInt(key, default)
     }
