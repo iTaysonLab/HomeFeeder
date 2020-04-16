@@ -52,4 +52,7 @@
     <string name="pref_syscolors_disabled">Requires Android 8.1 or newer</string>
 
     <string name="action_reload">Reload</string>
+
+    <string name="pm_empty">No sources installed</string>
+    <string name="pm_desc">HomeFeeder uses them to display data</string>
 </resources>

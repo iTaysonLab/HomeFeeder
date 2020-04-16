@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HomeFeeder.iml" filepath="$PROJECT_DIR$/HomeFeeder.iml" group="HomeFeeder" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="HomeFeeder/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hf-rss-datasource/hf-rss-datasource.iml" filepath="$PROJECT_DIR$/.idea/modules/hf-rss-datasource/hf-rss-datasource.iml" group="HomeFeeder/hf-rss-datasource" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hf-vkplugin/hf-vkplugin.iml" filepath="$PROJECT_DIR$/.idea/modules/hf-vkplugin/hf-vkplugin.iml" group="HomeFeeder/hf-vkplugin" />
       <module fileurl="file://$PROJECT_DIR$/homefeeder-plugin-sdk/homefeeder-plugin-sdk.iml" filepath="$PROJECT_DIR$/homefeeder-plugin-sdk/homefeeder-plugin-sdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/homefeeder-sdk/homefeeder-sdk.iml" filepath="$PROJECT_DIR$/.idea/modules/homefeeder-sdk/homefeeder-sdk.iml" group="HomeFeeder/homefeeder-sdk" />
     </modules>

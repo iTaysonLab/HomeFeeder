@@ -15,13 +15,13 @@
             tools:listitem="@layout/plugin_manager_entry" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:outlineSpotShadowColor="@color/globalAccent"
             android:backgroundTint="@color/globalAccent"
             android:layout_marginBottom="8dp"
-            android:text="Reload"
+            android:text="@string/action_reload"
             android:layout_gravity="bottom|center_horizontal"
             app:icon="@drawable/ic_replay_24"
             android:textAllCaps="false"
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:targetApi="p" />

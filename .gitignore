@@ -3,7 +3,6 @@ hf-rss-datasource
 hf-vkplugin
 
 # SDK as submodule
-homefeeder-plugin-sdk
 hf-vkplugin
 
 # Built application files

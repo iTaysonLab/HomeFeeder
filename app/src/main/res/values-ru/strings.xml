@@ -48,4 +48,7 @@
     <string name="pref_syscolors_disabled">Требуется Android 8.1 или новее</string>
 
     <string name="action_reload">Перезагрузить</string>
+
+    <string name="pm_empty">Источники не обнаружены</string>
+    <string name="pm_desc">HomeFeeder использует их для получения данных</string>
 </resources>
