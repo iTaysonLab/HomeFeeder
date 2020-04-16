@@ -1,2 +1,2 @@
-include ':app', ':homefeederx-sdk'
+include ':app', ':homefeeder-sdk'
 rootProject.name='HomeFeeder'
