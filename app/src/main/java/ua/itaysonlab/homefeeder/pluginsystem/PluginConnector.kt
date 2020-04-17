@@ -4,7 +4,9 @@ import android.app.Service
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import ua.itaysonlab.hfsdk.FeedItem
@@ -23,6 +25,8 @@ object PluginConnector {
 
     private var index = 0
     private var serviceSize = 0
+
+    private val handler = Handler(Looper.getMainLooper())
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
@@ -54,6 +58,8 @@ object PluginConnector {
     }
 
     fun getFeedAsItLoads(page: Int, onNewFeed: (List<FeedItem>) -> Unit, onLoadFinished: () -> Unit) {
+        Logger.log(TAG, "getFeedAsItLoads")
+
         val stub = object: IFeedInterfaceCallback.Stub() {
             override fun onFeedReceive(feed: MutableList<FeedItem>?) {
                 feed ?: return
@@ -65,7 +71,9 @@ object PluginConnector {
                 index++
                 if (index >= serviceSize) {
                     Logger.log(TAG, "Finished chain!")
-                    onLoadFinished()
+                    handler.post {
+                        onLoadFinished()
+                    }
                 }
             }
         }
