@@ -1,7 +1,5 @@
 package ua.itaysonlab.homefeeder.utils
 
-import ua.itaysonlab.homefeeder.overlay.notification.NotificationListener
-
 class OverlayBridge {
     private var callback: OverlayBridgeCallback? = null
 
@@ -11,10 +9,6 @@ class OverlayBridge {
 
     fun getCallback(): OverlayBridgeCallback? {
         return callback
-    }
-
-    fun getNotificationListener(): NotificationListener {
-        return callback!!.getNotificationListener()
     }
 
     fun setCallback(callback: OverlayBridgeCallback?) {
@@ -32,6 +26,5 @@ class OverlayBridge {
         fun applyNewTransparency(value: String)
 
         fun onClientMessage(action: String)
-        fun getNotificationListener(): NotificationListener
     }
 }

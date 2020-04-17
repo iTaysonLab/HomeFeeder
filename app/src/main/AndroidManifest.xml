@@ -36,14 +36,6 @@
                 android:name="service.api.version"
                 android:value="7" />
         </service>
-        <service
-            android:name=".overlay.notification.NotificationListener"
-            android:label="@string/service_label"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

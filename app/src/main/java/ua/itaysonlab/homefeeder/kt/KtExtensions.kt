@@ -15,11 +15,6 @@ const val LIGHT_BORDER = 0.5f
 fun Int.isLight() = ColorUtils.calculateLuminance(this) > LIGHT_BORDER
 fun Int.isDark() = ColorUtils.calculateLuminance(this) < LIGHT_BORDER
 
-fun Context.isNotificationServiceGranted(): Boolean {
-    val enabledNotificationListeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
-    return !(enabledNotificationListeners == null || !enabledNotificationListeners.contains(packageName))
-}
-
 fun Bundle.dump(tag: String) {
     keySet().forEach {
         val item = get(it)

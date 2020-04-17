@@ -11,8 +11,8 @@ android {
         applicationId "ua.itaysonlab.homefeeder"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 6
-        versionName "pre-alpha 6"
+        versionCode 7
+        versionName "pre-alpha 7"
     }
     buildTypes {
         release {

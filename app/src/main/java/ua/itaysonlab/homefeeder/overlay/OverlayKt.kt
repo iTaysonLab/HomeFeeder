@@ -1,13 +1,10 @@
 package ua.itaysonlab.homefeeder.overlay
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.IBinder
 import android.view.View
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,19 +13,15 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.overlay_header.view.*
 import kotlinx.android.synthetic.main.overlay_layout.view.*
 import ua.itaysonlab.hfsdk.FeedItem
-import ua.itaysonlab.hfsdk.IFeedInterfaceCallback
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
 import ua.itaysonlab.homefeeder.kt.clearLightFlags
 import ua.itaysonlab.homefeeder.kt.isDark
-import ua.itaysonlab.homefeeder.kt.isNotificationServiceGranted
 import ua.itaysonlab.homefeeder.kt.setLightFlags
 import ua.itaysonlab.homefeeder.overlay.feed.FeedAdapter
 import ua.itaysonlab.homefeeder.overlay.launcherapi.LauncherAPI
 import ua.itaysonlab.homefeeder.overlay.launcherapi.OverlayThemeHolder
-import ua.itaysonlab.homefeeder.overlay.notification.NotificationListener
-import ua.itaysonlab.homefeeder.overlay.notification.NotificationWrapper
 import ua.itaysonlab.homefeeder.pluginsystem.PluginConnector
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
 import ua.itaysonlab.homefeeder.theming.Theming
@@ -38,10 +31,6 @@ import ua.itaysonlab.replica.vkpopup.DialogActionsVcByPopup
 import ua.itaysonlab.replica.vkpopup.PopupItem
 
 class OverlayKt(val context: Context): OverlayController(context, R.style.AppTheme, R.style.WindowTheme), OverlayBridge.OverlayBridgeCallback {
-    override fun getNotificationListener(): NotificationListener {
-        return mService
-    }
-    
     companion object {
         const val LOG_TAG = "OverlayKt"
     }
@@ -51,8 +40,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     private lateinit var rootView: View
     private lateinit var adapter: FeedAdapter
-    private lateinit var mService: NotificationListener
-    private var mBound = false
 
     private val list = mutableListOf<FeedItem>()
 
@@ -84,14 +71,15 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     private fun updateStubUi() {
-        if (!this.isNotificationServiceGranted()) {
+        // TODO: make stub for no datasources
+        /*if (!this.isNotificationServiceGranted()) {
             rootView.nas_title.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
             rootView.nas_text.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
             rootView.nas_icon.imageTintList = ColorStateList.valueOf(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
             rootView.nas_reload.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
             rootView.nas_action.setBackgroundColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
             rootView.nas_action.setTextColor(themeHolder.currentTheme.get(Theming.Colors.CARD_BG.position))
-        }
+        }*/
 
         val theme = if (themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position).isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
         rootView.header_preferences.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
@@ -160,13 +148,13 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             startActivity(Intent(HFApplication.ACTION_MANAGE_LISTENERS))
         }
         rootView.nas_reload.setOnClickListener {
-            if (this.isNotificationServiceGranted()) {
+            /*if (this.isNotificationServiceGranted()) {
                 //bindService()
                 rootView.overlay_root.visibility = View.VISIBLE
                 rootView.no_access_stub.visibility = View.GONE
             } else {
                 Snackbar.make(rootView.user_root, R.string.overlay_no_permission_snackbar, Snackbar.LENGTH_LONG).show()
-            }
+            }*/
         }
     }
 

@@ -9,29 +9,14 @@ import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.activites.MainActivity
 import ua.itaysonlab.homefeeder.fragments.base.FixedPreferencesFragment
-import ua.itaysonlab.homefeeder.kt.isNotificationServiceGranted
 import ua.itaysonlab.homefeeder.prefui.HFElementPreview
 
 class PreferenceFragment : FixedPreferencesFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.pref_general, rootKey)
 
-        bindPermissionHeader()
         bindAppearance()
         if (BuildConfig.DEBUG) bindDebug()
-    }
-
-    private fun bindPermissionHeader() {
-        val permission = findPreference<Preference>("hf_permission")!!
-        if (activity!!.isNotificationServiceGranted()) {
-            permission.setIcon(R.drawable.ic_notifications_24)
-            permission.setSummary(R.string.allow_notify_pref_granted)
-        } else {
-            permission.setOnPreferenceClickListener {
-                (activity as MainActivity).requestNotificationPermission()
-                true
-            }
-        }
     }
 
     private fun bindAppearance() {

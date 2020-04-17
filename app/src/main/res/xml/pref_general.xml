@@ -4,11 +4,6 @@
     <ua.itaysonlab.homefeeder.prefui.HFElementPreview
         android:key="preview"
         app:layout="@layout/preview" />
-    <Preference
-        android:key="hf_permission"
-        android:title="@string/allow_notify_pref"
-        android:icon="@drawable/ic_warning_24"
-        android:summary="@string/allow_notify_pref_revoked" />
     <PreferenceCategory android:title="@string/pref_cat_overlay">
         <ListPreference
             android:defaultValue="auto_launcher"
