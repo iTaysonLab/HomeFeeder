@@ -13,7 +13,7 @@ import ua.itaysonlab.homefeeder.R
 object TextCardWithActionsBinder: FeedBinder {
     override fun bind(theme: SparseIntArray?, item: FeedItem, view: View) {
         TextCardBinder.bind(theme, item, view)
-        (item.content as TextCardContent).actions!!.forEach {
+        (item.content as TextCardContent).actions?.forEach {
             view.button_valley_2.removeAllViews()
             view.button_valley_2.addView(LayoutInflater.from(view.context).inflate(R.layout.feed_card_action, view as ViewGroup, false).apply {
                 (this as TextView).text = it.title
