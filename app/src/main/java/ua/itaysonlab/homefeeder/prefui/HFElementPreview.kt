@@ -164,7 +164,7 @@ class HFElementPreview @JvmOverloads constructor(
         view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
         view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
         view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        view.ibg_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        //view.ibg_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
     }
 
 }
