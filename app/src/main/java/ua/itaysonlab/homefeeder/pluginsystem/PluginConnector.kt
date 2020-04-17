@@ -33,7 +33,7 @@ object PluginConnector {
         override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
             Logger.log(TAG, "Connected to service ${componentName.packageName} / ${componentName.className}")
             interfaces[componentName.packageName] = IFeedInterface.Stub.asInterface(iBinder)
-            interfaces[componentName.packageName]!!.getFeed(callbacks[componentName.packageName], 0, null, null)
+            interfaces[componentName.packageName]!!.getFeed(callbacks[componentName.packageName], 0, "default", null)
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
