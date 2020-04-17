@@ -10,6 +10,6 @@
     <dimen name="dialog_rounding">8dp</dimen>
     <dimen name="preview_height">140dp</dimen>
 
-    <dimen name="feed_card_horizontal_padding">18dp</dimen>
+    <dimen name="feed_card_horizontal_padding">12dp</dimen>
     <dimen name="feed_card_vertical_padding">12dp</dimen>
 </resources>

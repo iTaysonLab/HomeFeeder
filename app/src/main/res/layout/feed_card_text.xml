@@ -8,43 +8,27 @@
     android:layout_marginEnd="@dimen/rl_margin"
     app:cardBackgroundColor="@color/cardBg"
     app:cardCornerRadius="12dp">
-    <FrameLayout
+    <LinearLayout
+    android:id="@+id/iforeground"
+    android:paddingTop="@dimen/feed_card_vertical_padding"
+    android:paddingBottom="@dimen/feed_card_vertical_padding"
+    android:background="@color/cardBg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/notification_generic_content" />
+    <HorizontalScrollView
+        android:id="@+id/button_valley"
+        android:layout_marginTop="4dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/ibackground"
-            android:padding="12dp"
-            android:background="@drawable/remove_bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/ibg_icon"
-                android:layout_marginStart="12dp"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_delete_24"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/iforeground"
-            android:paddingTop="@dimen/feed_card_vertical_padding"
-            android:paddingBottom="@dimen/feed_card_vertical_padding"
-            android:background="@color/cardBg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <include layout="@layout/notification_generic_content" />
-            <HorizontalScrollView
-                android:id="@+id/button_valley"
-                android:layout_marginTop="4dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/button_valley_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </HorizontalScrollView>
-        </LinearLayout>
-    </FrameLayout>
+            android:id="@+id/button_valley_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+</LinearLayout>
 </com.google.android.material.card.MaterialCardView>

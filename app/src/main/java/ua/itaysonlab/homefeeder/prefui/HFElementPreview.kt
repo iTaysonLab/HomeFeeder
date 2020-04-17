@@ -122,11 +122,7 @@ class HFElementPreview @JvmOverloads constructor(
     }
 
     private fun bindLayout() {
-        val not: View = layoutInflater.inflate(if (isCompact) {
-            R.layout.notification_compact
-        } else {
-            R.layout.notification_simple
-        }, null, false)
+        val not: View = layoutInflater.inflate(R.layout.feed_card_text, null, false)
         view.previewer.addView(not)
         bindPreview(not)
     }

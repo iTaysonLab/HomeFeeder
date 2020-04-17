@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
+import ua.itaysonlab.hfsdk.FeedCategory
 import ua.itaysonlab.hfsdk.FeedItem
 import ua.itaysonlab.hfsdk.IFeedInterface
 import ua.itaysonlab.hfsdk.IFeedInterfaceCallback
@@ -32,7 +33,7 @@ object PluginConnector {
         override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
             Logger.log(TAG, "Connected to service ${componentName.packageName} / ${componentName.className}")
             interfaces[componentName.packageName] = IFeedInterface.Stub.asInterface(iBinder)
-            interfaces[componentName.packageName]!!.getFeed(callbacks[componentName.packageName], 0, null)
+            interfaces[componentName.packageName]!!.getFeed(callbacks[componentName.packageName], 0, null, null)
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -61,6 +62,10 @@ object PluginConnector {
         Logger.log(TAG, "getFeedAsItLoads")
 
         val stub = object: IFeedInterfaceCallback.Stub() {
+            override fun onCategoriesReceive(categories: MutableList<FeedCategory>?) {
+
+            }
+
             override fun onFeedReceive(feed: MutableList<FeedItem>?) {
                 feed ?: return
 
@@ -81,7 +86,7 @@ object PluginConnector {
         if (hasInitialized) {
             index = 0
             interfaces.forEach {
-                it.value?.getFeed(stub, page, null)
+                it.value?.getFeed(stub, page, null, null)
             }
             return
         }
