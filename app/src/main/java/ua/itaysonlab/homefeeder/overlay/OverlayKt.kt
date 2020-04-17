@@ -37,7 +37,7 @@ import ua.itaysonlab.homefeeder.utils.OverlayBridge
 import ua.itaysonlab.replica.vkpopup.DialogActionsVcByPopup
 import ua.itaysonlab.replica.vkpopup.PopupItem
 
-class OverlayKt(val context: Context): OverlayController(context, R.style.AppTheme, R.style.WindowTheme), NotificationListener.NLCallback, OverlayBridge.OverlayBridgeCallback {
+class OverlayKt(val context: Context): OverlayController(context, R.style.AppTheme, R.style.WindowTheme), OverlayBridge.OverlayBridgeCallback {
     override fun getNotificationListener(): NotificationListener {
         return mService
     }
@@ -55,20 +55,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     private var mBound = false
 
     private val list = mutableListOf<FeedItem>()
-
-    private val connection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            val binder = service as NotificationListener.LocalBinder
-            mService = binder.service
-            mBound = true
-            mService.addCallback(this@OverlayKt)
-            refreshNotifications()
-        }
-
-        override fun onServiceDisconnected(arg0: ComponentName) {
-            mBound = false
-        }
-    }
 
     private fun setTheme(force: String?) {
         themeHolder.setTheme(when (force ?: HFPreferences.overlayTheme) {
@@ -175,7 +161,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         }
         rootView.nas_reload.setOnClickListener {
             if (this.isNotificationServiceGranted()) {
-                bindService()
+                //bindService()
                 rootView.overlay_root.visibility = View.VISIBLE
                 rootView.no_access_stub.visibility = View.GONE
             } else {
@@ -194,12 +180,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         initRecyclerView()
         initHeader()
 
-        if (!this.isNotificationServiceGranted()) {
-            initPermissionStub()
-        } else {
-            bindService()
-        }
-
         HFApplication.bridge.setCallback(this)
     }
 
@@ -216,11 +196,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mBound) {
-            mService.removeCallback(this)
-            unbindService(connection)
-            mBound = false
-        }
         HFApplication.bridge.setCallback(null)
     }
 
@@ -245,24 +220,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         val bgColor = themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position)
         val color = (themeHolder.getScrollAlpha(float) * 255.0f).toInt() shl 24 or (bgColor and 0x00ffffff)
         getWindow().setBackgroundDrawable(ColorDrawable(color))
-    }
-
-    private fun bindService() {
-        bindService(Intent(this, NotificationListener::class.java), connection, Context.BIND_AUTO_CREATE)
-    }
-
-    override fun onNewNotification(notification: NotificationWrapper) {
-        if (HFPreferences.debugging) {
-            Logger.log(LOG_TAG, "Notification has been posted by: ${notification.applicationName}")
-        }
-        refreshNotifications()
-    }
-
-    override fun onNotificationRemove(notification: NotificationWrapper) {
-        if (HFPreferences.debugging) {
-            Logger.log(LOG_TAG, "Notification has been removed by: ${notification.applicationName}")
-        }
-        refreshNotifications()
     }
 
     override fun onClientMessage(action: String) {
