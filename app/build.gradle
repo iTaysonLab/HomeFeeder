@@ -11,8 +11,8 @@ android {
         applicationId "ua.itaysonlab.homefeeder"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 7
-        versionName "pre-alpha 7"
+        versionCode 8
+        versionName "pre-alpha 8"
     }
     buildTypes {
         release {
@@ -22,6 +22,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     androidExtensions {
         experimental = true
