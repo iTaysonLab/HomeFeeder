@@ -154,7 +154,6 @@ class HFElementPreview @JvmOverloads constructor(
         val cardBg = theme.get(Theming.Colors.CARD_BG.position)
         if (!isCompact) {
             if (view is CardView) view.setCardBackgroundColor(cardBg)
-            view.iforeground.setBackgroundColor(cardBg)
         }
 
         val theme = if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
@@ -164,7 +163,6 @@ class HFElementPreview @JvmOverloads constructor(
         view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
         view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
         view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        //view.ibg_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
     }
 
 }
