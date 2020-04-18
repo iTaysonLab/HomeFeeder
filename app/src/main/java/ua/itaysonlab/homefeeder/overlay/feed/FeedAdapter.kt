@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ua.itaysonlab.hfsdk.FeedItem
 import ua.itaysonlab.hfsdk.FeedItemType
 import ua.itaysonlab.homefeeder.R
+import ua.itaysonlab.homefeeder.overlay.feed.binders.StoryCardBinder
 import ua.itaysonlab.homefeeder.overlay.feed.binders.TextCardBinder
 import ua.itaysonlab.homefeeder.overlay.feed.binders.TextCardWithActionsBinder
 
@@ -39,19 +40,16 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
     override fun getItemCount() = list.size
 
     override fun getItemViewType(position: Int): Int {
-        return when (list[position].type) {
-            FeedItemType.TEXT_CARD -> 1
-            FeedItemType.TEXT_CARD_ACTIONS -> 2
-        }
+        return (list[position].type.ordinal)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         if (!::layoutInflater.isInitialized) layoutInflater = LayoutInflater.from(parent.context)
 
-        val layoutResource = when (viewType) {
-            1 -> R.layout.notification_simple
-            2 -> R.layout.feed_card_text
-            else -> R.layout.notification_simple
+        val layoutResource = when (FeedItemType.values()[viewType]) {
+            FeedItemType.TEXT_CARD -> R.layout.notification_simple
+            FeedItemType.TEXT_CARD_ACTIONS -> R.layout.feed_card_text
+            FeedItemType.STORY_CARD -> R.layout.feed_card_story_large
         }
 
         return FeedViewHolder(viewType, layoutInflater.inflate(layoutResource, parent, false))
@@ -59,9 +57,10 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val item = list[position]
-        when (holder.type) {
-            1 -> TextCardBinder.bind(theme, item, holder.itemView)
-            2 -> TextCardWithActionsBinder.bind(theme, item, holder.itemView)
+        when (FeedItemType.values()[holder.type]) {
+            FeedItemType.TEXT_CARD -> TextCardBinder.bind(theme, item, holder.itemView)
+            FeedItemType.TEXT_CARD_ACTIONS -> TextCardWithActionsBinder.bind(theme, item, holder.itemView)
+            FeedItemType.STORY_CARD -> StoryCardBinder.bind(theme, item, holder.itemView)
         }
     }
 
