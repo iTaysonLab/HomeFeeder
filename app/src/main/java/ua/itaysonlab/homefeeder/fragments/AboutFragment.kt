@@ -21,16 +21,16 @@ class AboutFragment : FixedPreferencesFragment() {
 
         tg.summary = "@homefeeder"
         tg.setOnPreferenceClickListener {
-            openLink(activity!!, "https://t.me/homefeeder")
+            openLink(requireActivity(), "https://t.me/homefeeder")
             true
         }
         tgdev.summary = "@itaysonlab"
         tgdev.setOnPreferenceClickListener {
-            openLink(activity!!, "https://t.me/itaysonlab")
+            openLink(requireActivity(), "https://t.me/itaysonlab")
             true
         }
         git.setOnPreferenceClickListener {
-            openLink(activity!!, "https://github.com/iTaysonLab/HomeFeeder/")
+            openLink(requireActivity(), "https://github.com/iTaysonLab/HomeFeeder/")
             true
         }
     }
