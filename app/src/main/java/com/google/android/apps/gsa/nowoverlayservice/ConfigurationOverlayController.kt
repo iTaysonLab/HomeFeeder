@@ -11,23 +11,13 @@ import com.google.android.libraries.gsa.d.a.v
 import ua.itaysonlab.homefeeder.overlay.OverlayKt
 
 class ConfigurationOverlayController(private val service: Service) : OverlaysController(service) {
-    override fun Hx(): Int {
-        return 24
-    }
+    override fun Hx() = 24
 
     override fun createController(
         configuration: Configuration?,
         i: Int,
         i2: Int
-    ): OverlayController {
-        var context: Context = service
-        if (configuration != null) {
-            context = context.createConfigurationContext(configuration)
-        }
-        return OverlayKt(context)
-    }
+    ): OverlayController = OverlayKt(if (configuration != null) service.createConfigurationContext(configuration) else service)
 
-    override fun HA(): v {
-        return v()
-    }
+    override fun HA() = v()
 }

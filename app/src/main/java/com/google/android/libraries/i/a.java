@@ -25,8 +25,6 @@ public interface a extends IInterface {
 
     void cnL();
 
-    boolean cnM();
-
     void fI(int i);
 
     void od(boolean z);

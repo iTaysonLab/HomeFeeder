@@ -94,7 +94,7 @@ public abstract class OverlaysController {
         }
     }
 
-    public final synchronized void dump(PrintWriter printWriter) {
+    /*public final synchronized void dump(PrintWriter printWriter) {
         printWriter.println("OverlayServiceController, num clients : " + this.clients.size());
         for (int size = this.clients.size() - 1; size >= 0; size--) {
             OverlayControllerBinder overlayControllerBinderVar = this.clients.valueAt(size);
@@ -116,7 +116,7 @@ public abstract class OverlaysController {
                 printWriter.println("  null client: " + size);
             }
         }
-    }
+    }*/
 
     public final synchronized void onDestroy() {
         for (int size = this.clients.size() - 1; size >= 0; size--) {

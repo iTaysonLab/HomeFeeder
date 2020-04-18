@@ -154,11 +154,6 @@ final class OverlayControllerBinder extends LauncherOverlayInterfaceBinder imple
         return this.overlaysController.HA().HC();
     }
 
-    //Todo: always true, remove
-    public final boolean cnM() {
-        return true;
-    }
-
     public final void run() {
         destroy();
     }

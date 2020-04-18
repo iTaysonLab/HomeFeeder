@@ -78,9 +78,8 @@ public abstract class LauncherOverlayInterfaceBinder extends LauncherOverlayBind
                 c.a(parcel2, HC);
                 break;
             case 13:
-                HC = cnM();
                 parcel2.writeNoException();
-                c.a(parcel2, HC);
+                c.a(parcel2, true);
                 break;
             case 14:
                 Bundle bundle = (Bundle) c.a(parcel, Bundle.CREATOR);

@@ -23,20 +23,18 @@ class DrawerOverlayService : Service() {
         super.onDestroy()
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        return this.overlaysController.onBind(intent)
-    }
+    override fun onBind(intent: Intent): IBinder? = this.overlaysController.onBind(intent)
 
     override fun onUnbind(intent: Intent): Boolean {
         this.overlaysController.unUnbind(intent)
         return false
     }
 
-    override fun dump(
+    /*override fun dump(
         fileDescriptor: FileDescriptor,
         printWriter: PrintWriter,
         strArr: Array<String>
     ) {
-        this.overlaysController.dump(printWriter)
-    }
+        //this.overlaysController.dump(printWriter)
+    }*/
 }
