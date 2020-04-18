@@ -12,7 +12,6 @@
     android:id="@+id/iforeground"
     android:paddingTop="@dimen/feed_card_vertical_padding"
     android:paddingBottom="@dimen/feed_card_vertical_padding"
-    android:background="@color/cardBg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
