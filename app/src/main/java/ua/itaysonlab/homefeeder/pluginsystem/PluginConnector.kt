@@ -86,7 +86,7 @@ object PluginConnector {
         if (hasInitialized) {
             index = 0
             interfaces.forEach {
-                it.value?.getFeed(stub, page, null, null)
+                it.value?.getFeed(stub, page, "default", null)
             }
             return
         }
