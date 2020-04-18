@@ -100,7 +100,7 @@ class HFElementPreview @JvmOverloads constructor(
 
         if (cardBgColorChoice != "theme") {
             theme.put(
-                Theming.Colors.CARD_BG.position, when (cardBgColorChoice) {
+                Theming.Colors.CARD_BG.ordinal, when (cardBgColorChoice) {
                     "white" -> ContextCompat.getColor(context, R.color.card_bg)
                     "dark" -> ContextCompat.getColor(context, R.color.card_bg_dark)
                     "amoled" -> Color.BLACK
@@ -151,18 +151,18 @@ class HFElementPreview @JvmOverloads constructor(
         view.not_title.text = "Settings Preview"
         view.not_text.text = "This is a test of your HomeFeeder appearance settings."
 
-        val cardBg = theme.get(Theming.Colors.CARD_BG.position)
+        val cardBg = theme.get(Theming.Colors.CARD_BG.ordinal)
         if (!isCompact) {
             if (view is CardView) view.setCardBackgroundColor(cardBg)
         }
 
         val theme = if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
-        view.not_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        view.not_app_name.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        view.not_text.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
-        view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
-        view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        view.not_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        view.not_app_name.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        view.not_text.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
+        view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
+        view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
     }
 
 }

@@ -106,10 +106,10 @@ class OverlayThemeHolder(private val context: Context, private val overlay: Over
         currentTheme = theme
 
         shouldUseSN = if (overlayBgPref != "theme") {
-            currentTheme.put(Theming.Colors.OVERLAY_BG.position, overlayBackground)
+            currentTheme.put(Theming.Colors.OVERLAY_BG.ordinal, overlayBackground)
             overlayBackground.isLight()
         } else {
-            currentTheme.get(Theming.Colors.IS_LIGHT.position) == 1
+            currentTheme.get(Theming.Colors.IS_LIGHT.ordinal) == 1
         }
 
         if (!shouldUseSN && isSNApplied) {
@@ -118,7 +118,7 @@ class OverlayThemeHolder(private val context: Context, private val overlay: Over
         }
 
         if (cardBgPref != "theme") {
-            currentTheme.put(Theming.Colors.CARD_BG.position, cardBackground)
+            currentTheme.put(Theming.Colors.CARD_BG.ordinal, cardBackground)
         }
 
         Logger.log("OTH", currentTheme.toString())

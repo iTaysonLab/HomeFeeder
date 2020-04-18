@@ -73,17 +73,17 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     private fun updateStubUi() {
         // TODO: make stub for no datasources
         /*if (!this.isNotificationServiceGranted()) {
-            rootView.nas_title.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_text.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
-            rootView.nas_icon.imageTintList = ColorStateList.valueOf(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_reload.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_action.setBackgroundColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-            rootView.nas_action.setTextColor(themeHolder.currentTheme.get(Theming.Colors.CARD_BG.position))
+            rootView.nas_title.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+            rootView.nas_text.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
+            rootView.nas_icon.imageTintList = ColorStateList.valueOf(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+            rootView.nas_reload.setTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+            rootView.nas_action.setBackgroundColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+            rootView.nas_action.setTextColor(themeHolder.currentTheme.get(Theming.Colors.CARD_BG.ordinal))
         }*/
 
-        val theme = if (themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position).isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
-        rootView.header_preferences.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-        rootView.header_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+        val theme = if (themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.ordinal).isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
+        rootView.header_preferences.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        rootView.header_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
     }
 
     private fun initRecyclerView() {
@@ -115,11 +115,11 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     private fun callMenuPopup(view: View) {
         val popup = DialogActionsVcByPopup(view)
         popup.a(createMenuList(), {
-            it.first.backgroundTintList = ColorStateList.valueOf(themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position))
+            it.first.backgroundTintList = ColorStateList.valueOf(themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.ordinal))
             it.second.apply {
-                setActionLabelTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
-                setDividerColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.position))
-                setActionIconTint(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.position))
+                setActionLabelTextColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+                setDividerColor(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
+                setActionIconTint(themeHolder.currentTheme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
             }
         }) {
             popup.dismiss()
@@ -205,7 +205,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             }
         }
 
-        val bgColor = themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.position)
+        val bgColor = themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.ordinal)
         val color = (themeHolder.getScrollAlpha(float) * 255.0f).toInt() shl 24 or (bgColor and 0x00ffffff)
         getWindow().setBackgroundDrawable(ColorDrawable(color))
     }
