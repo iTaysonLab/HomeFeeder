@@ -4,17 +4,17 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "ua.itaysonlab.hfrss",
+  "applicationId": "ua.itaysonlab.homefeeder",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 2,
-      "versionName": "2",
+      "versionCode": 8,
+      "versionName": "8",
       "enabled": true,
-      "outputFile": "hf-rss-datasource-release.apk"
+      "outputFile": "app-release.apk"
     }
   ]
 }
