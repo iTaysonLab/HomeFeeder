@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HomeFeeder.iml" filepath="$PROJECT_DIR$/HomeFeeder.iml" group="HomeFeeder" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="HomeFeeder/app" />
-      <module fileurl="file://$PROJECT_DIR$/homefeeder-plugin-sdk/homefeeder-plugin-sdk.iml" filepath="$PROJECT_DIR$/homefeeder-plugin-sdk/homefeeder-plugin-sdk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/homefeeder-rss/homefeeder-rss.iml" filepath="$PROJECT_DIR$/.idea/modules/homefeeder-rss/homefeeder-rss.iml" group="HomeFeeder/homefeeder-rss" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/homefeeder-sdk/homefeeder-sdk.iml" filepath="$PROJECT_DIR$/.idea/modules/homefeeder-sdk/homefeeder-sdk.iml" group="HomeFeeder/homefeeder-sdk" />
+      <module fileurl="file://$PROJECT_DIR$/HomeFeeder.iml" filepath="$PROJECT_DIR$/HomeFeeder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HomeFeeder.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HomeFeeder.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/homefeeder-rss/HomeFeeder.homefeeder-rss.iml" filepath="$PROJECT_DIR$/.idea/modules/homefeeder-rss/HomeFeeder.homefeeder-rss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/homefeeder-sdk/HomeFeeder.homefeeder-sdk.iml" filepath="$PROJECT_DIR$/.idea/modules/homefeeder-sdk/HomeFeeder.homefeeder-sdk.iml" />
     </modules>
   </component>
 </project>

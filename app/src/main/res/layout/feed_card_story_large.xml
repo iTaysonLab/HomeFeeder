@@ -69,13 +69,15 @@
                 tools:text="Story Source" />
 
             <TextView
+                android:ellipsize="end"
+                android:maxLines="18"
                 android:layout_marginTop="8dp"
                 android:id="@+id/story_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="?android:textColorSecondary"
-                android:textSize="16sp"
-                tools:text="Story Desc" />
+                android:textSize="14sp"
+                tools:text="Story Text" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -149,6 +149,7 @@ class OverlayThemeHolder(private val context: Context, private val overlay: Over
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) return Color.BLACK
             val wc = WallpaperManager.getInstance(HFApplication.instance).getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
             wc ?: Color.BLACK
+            wc?.tertiaryColor ?: Color.BLACK
             return wc!!.tertiaryColor.toInt()
         }
     }
