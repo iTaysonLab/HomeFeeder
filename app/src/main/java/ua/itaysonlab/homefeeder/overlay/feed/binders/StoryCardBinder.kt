@@ -18,7 +18,11 @@ object StoryCardBinder: FeedBinder {
 
         view.story_title.text = content.title
         view.story_source.text = content.source.title
-        view.story_desc.text = Html.fromHtml(content.text).toString()
+        if (content.text == "") {
+            view.story_desc.visibility = View.GONE
+        } else {
+            view.story_desc.text = Html.fromHtml(content.text).toString()
+        }
 
         view.story_pic.load(content.background_url)
 
