@@ -92,7 +92,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         }
 
         adapter = FeedAdapter()
-        adapter.setHasStableIds(true)
         rootView.recycler.layoutManager = LinearLayoutManager(context)
         rootView.recycler.adapter = adapter
 
@@ -236,7 +235,6 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
 
     override fun applyCompactCard(value: Boolean) {
         adapter = FeedAdapter()
-        adapter.setHasStableIds(true)
         //adapter.setCompact(value)
         adapter.setTheme(themeHolder.currentTheme)
         rootView.recycler.adapter = adapter

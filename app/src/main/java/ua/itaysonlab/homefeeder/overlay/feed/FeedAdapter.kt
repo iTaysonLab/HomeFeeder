@@ -11,24 +11,24 @@ import ua.itaysonlab.homefeeder.R
 import ua.itaysonlab.homefeeder.overlay.feed.binders.StoryCardBinder
 import ua.itaysonlab.homefeeder.overlay.feed.binders.TextCardBinder
 import ua.itaysonlab.homefeeder.overlay.feed.binders.TextCardWithActionsBinder
+import ua.itaysonlab.homefeeder.utils.Logger
 
 class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
-    private var list = mutableListOf<FeedItem>()
+    private var list = listOf<FeedItem>()
     private lateinit var layoutInflater: LayoutInflater
     private var theme: SparseIntArray? = null
 
     fun replace(new: List<FeedItem>) {
-        list.apply {
-            clear()
-            addAll(new)
-        }
+        list = new
         notifyDataSetChanged()
     }
 
-    fun update(new: List<FeedItem>) {
-        list.apply {
+    fun append(new: List<FeedItem>) {
+        list = mutableListOf<FeedItem>().apply {
+            addAll(list)
             addAll(new)
         }
+
         notifyDataSetChanged()
     }
 
@@ -37,7 +37,9 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount(): Int {
+        return list.size
+    }
 
     override fun getItemViewType(position: Int): Int {
         return (list[position].type.ordinal)

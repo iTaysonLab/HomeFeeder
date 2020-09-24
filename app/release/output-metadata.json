@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "ua.itaysonlab.homefeeder",
+  "variantName": "processReleaseResources",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 10,
+      "versionName": "pre-alpha 10",
+      "outputFile": "app-release.apk"
+    }
+  ]
+}
