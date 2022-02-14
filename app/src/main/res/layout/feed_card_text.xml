@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/notification_generic_content" />
+    <include android:id="@+id/header" layout="@layout/notification_generic_content" />
     <HorizontalScrollView
         android:id="@+id/button_valley"
         android:layout_marginTop="4dp"

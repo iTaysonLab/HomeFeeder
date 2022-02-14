@@ -1,45 +1,13 @@
 <resources>
-    <style name="HFBaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/globalAccent</item>
-        <item name="colorPrimaryDark">@color/globalAccent</item>
-        <item name="colorAccent">@color/globalAccent</item>
+    <style name="HFBaseTheme" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Surface</item>
-        <item name="alertDialogTheme">@style/ThemedAlertDialog</item>
         <item name="materialCardViewStyle">@style/HFMaterialCard</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="HFMaterialCard" parent="Widget.MaterialComponents.CardView">
+    <style name="HFMaterialCard" parent="Widget.Material3.CardView.Filled">
         <item name="cardCornerRadius">8dp</item>
-    </style>
-
-    <style name="ThemedAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:colorAccent">@color/globalAccent</item>
-        <item name="colorAccent">@color/globalAccent</item>
-        <item name="colorPrimary">@color/globalAccent</item>
-        <item name="dialogCornerRadius">8dp</item>
-        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button.MD2</item>
-        <item name="android:textAppearanceButton">@style/TextAppearance.MaterialComponents.Button.MD2</item>
-    </style>
-
-    <style name="MDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="android:colorAccent">@color/globalAccent</item>
-        <item name="alertDialogStyle">@style/MaterialAlertDialog.MaterialComponents</item>
-        <item name="android:backgroundDimAmount">0.62</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="dialogCornerRadius">8dp</item>
-        <item name="buttonBarPositiveButtonStyle">@style/ButtonBarButtonStyleM2</item>
-        <item name="buttonBarNegativeButtonStyle">@style/ButtonBarButtonStyleM2</item>
-        <item name="buttonBarNeutralButtonStyle">@style/ButtonBarButtonStyleM2</item>
-    </style>
-
-    <style name="ButtonBarButtonStyleM2" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/globalAccent</item>
-        <item name="android:background">@null</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="TextAppearance.MaterialComponents.Button.MD2" parent="TextAppearance.MaterialComponents.Button">
-        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="AppTheme" parent="HFBaseTheme">

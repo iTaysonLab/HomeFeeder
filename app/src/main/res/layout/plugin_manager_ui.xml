@@ -15,7 +15,6 @@
             tools:listitem="@layout/plugin_manager_entry" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:backgroundTint="@color/globalAccent"
             android:layout_marginBottom="8dp"
             android:text="@string/action_reload"
             android:layout_gravity="bottom|center_horizontal"

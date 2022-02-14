@@ -87,7 +87,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="8dp"
                 android:textAllCaps="false"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:text="@string/overlay_reload" />
         </RelativeLayout>
     </FrameLayout>

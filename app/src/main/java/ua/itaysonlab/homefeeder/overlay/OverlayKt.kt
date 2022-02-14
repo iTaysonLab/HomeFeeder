@@ -6,12 +6,13 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.libraries.gsa.d.a.OverlayController
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.overlay_header.view.*
-import kotlinx.android.synthetic.main.overlay_layout.view.*
 import ua.itaysonlab.hfsdk.FeedItem
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
@@ -82,18 +83,20 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         }*/
 
         val theme = if (themeHolder.currentTheme.get(Theming.Colors.OVERLAY_BG.ordinal).isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
-        rootView.header_preferences.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
-        rootView.header_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        rootView.findViewById<ImageView>(R.id.header_preferences).imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        rootView.findViewById<TextView>(R.id.header_title).setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
     }
 
     private fun initRecyclerView() {
-        rootView.swipe_to_refresh.setOnRefreshListener {
+        rootView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).setOnRefreshListener {
             refreshNotifications()
         }
 
         adapter = FeedAdapter()
-        rootView.recycler.layoutManager = LinearLayoutManager(context)
-        rootView.recycler.adapter = adapter
+        rootView.findViewById<RecyclerView>(R.id.recycler).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@OverlayKt.adapter
+        }
 
         /*val callback = object: SwipeToDeleteCallback(object: RecyclerItemTouchHelperListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
@@ -106,7 +109,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
     }
 
     private fun initHeader() {
-        rootView.header_preferences.setOnClickListener {
+        rootView.findViewById<View>(R.id.header_preferences).setOnClickListener {
             callMenuPopup(it)
         }
     }
@@ -140,7 +143,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         )
     }
 
-    private fun initPermissionStub() {
+    /*private fun initPermissionStub() {
         rootView.overlay_root.visibility = View.GONE
         rootView.no_access_stub.visibility = View.VISIBLE
         rootView.nas_action.setOnClickListener {
@@ -155,7 +158,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
                 Snackbar.make(rootView.user_root, R.string.overlay_no_permission_snackbar, Snackbar.LENGTH_LONG).show()
             }*/
         }
-    }
+    }*/
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
@@ -177,7 +180,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
             list.addAll(feed)
         }) {
             adapter.replace(list)
-            rootView.swipe_to_refresh.isRefreshing = false
+            rootView.findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh).isRefreshing = false
         }
     }
 
@@ -237,7 +240,7 @@ class OverlayKt(val context: Context): OverlayController(context, R.style.AppThe
         adapter = FeedAdapter()
         //adapter.setCompact(value)
         adapter.setTheme(themeHolder.currentTheme)
-        rootView.recycler.adapter = adapter
+        rootView.findViewById<RecyclerView>(R.id.recycler).adapter = adapter
         refreshNotifications()
     }
 

@@ -15,13 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.plugin_manager_entry.view.*
-import kotlinx.android.synthetic.main.plugin_manager_ui.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
+import ua.itaysonlab.homefeeder.databinding.PluginManagerEntryBinding
 import ua.itaysonlab.homefeeder.pluginsystem.PluginFetcher
 import ua.itaysonlab.homefeeder.preferences.HFPluginPreferences
-import ua.itaysonlab.homefeeder.utils.Logger
 import kotlin.math.ceil
 
 class PluginsFragment : Fragment() {
@@ -70,7 +68,7 @@ class PluginsFragment : Fragment() {
             load()
         }
 
-        view.fab.setOnClickListener {
+        view.findViewById<View>(R.id.fab).setOnClickListener {
             PluginFetcher.init(HFApplication.instance)
             load()
         }
@@ -112,14 +110,16 @@ class PluginsFragment : Fragment() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             if (holder !is PluginVH) return
 
+            val binding = PluginManagerEntryBinding.bind(holder.itemView)
             val block = list[position]
-            holder.itemView.plugin_name.text = block.info.title
-            holder.itemView.plugin_desc.text = block.info.description
-            holder.itemView.plugin_author.text = block.info.author
-            holder.itemView.plugin_status.isChecked = block.isEnabled
-            holder.itemView.app_icon.setImageDrawable(HFApplication.getSmallIcon(block.info.pkg))
 
-            holder.itemView.plugin_status.setOnCheckedChangeListener { _, isChecked ->
+            binding.pluginName.text = block.info.title
+            binding.pluginDesc.text = block.info.description
+            binding.pluginAuthor.text = block.info.author
+            binding.pluginStatus.isChecked = block.isEnabled
+            binding.appIcon.setImageDrawable(HFApplication.getSmallIcon(block.info.pkg))
+
+            binding.pluginStatus.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     HFPluginPreferences.add(block.info.pkg)
                 } else HFPluginPreferences.remove(block.info.pkg)
@@ -130,10 +130,10 @@ class PluginsFragment : Fragment() {
             setStroke((holder.itemView as MaterialCardView), false, block.isEnabled)
 
             if (!block.info.hasPluginSettings) {
-                holder.itemView.plugin_to_settings.visibility = View.GONE
-                holder.itemView.plugin_to_settings.setOnClickListener(null)
+                binding.pluginToSettings.visibility = View.GONE
+                binding.pluginToSettings.setOnClickListener(null)
             } else {
-                holder.itemView.plugin_to_settings.setOnClickListener {
+                binding.pluginToSettings.setOnClickListener {
                     var data: ComponentName? = null
 
                     requireContext().packageManager.queryIntentActivities(Intent(PluginFetcher.INTENT_ACTION_SETTINGS), PackageManager.MATCH_DEFAULT_ONLY).forEach {

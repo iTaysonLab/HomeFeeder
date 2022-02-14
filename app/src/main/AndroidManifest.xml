@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ua.itaysonlab.homefeeder">
 
+    <queries>
+        <intent>
+            <action android:name="ua.itaysonlab.hfsdk.HOMEFEEDER_PLUGIN_ENTRYPOINT" />
+        </intent>
+    </queries>
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 

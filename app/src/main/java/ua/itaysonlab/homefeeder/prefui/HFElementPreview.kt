@@ -11,15 +11,15 @@ import android.util.AttributeSet
 import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
-import kotlinx.android.synthetic.main.notification_generic_content.view.*
-import kotlinx.android.synthetic.main.notification_simple.view.*
-import kotlinx.android.synthetic.main.preview.view.*
 import ua.itaysonlab.homefeeder.HFApplication
 import ua.itaysonlab.homefeeder.R
+import ua.itaysonlab.homefeeder.databinding.FeedCardTextBinding
 import ua.itaysonlab.homefeeder.kt.isDark
 import ua.itaysonlab.homefeeder.overlay.launcherapi.OverlayThemeHolder
 import ua.itaysonlab.homefeeder.preferences.HFPreferences
@@ -65,7 +65,7 @@ class HFElementPreview @JvmOverloads constructor(
     }
 
     private fun updateDimmer(bg: String, t: String) {
-        view.wallpaper_dimmer.apply {
+        view.findViewById<View>(R.id.wallpaper_dimmer).apply {
             alpha = when (t) {
                 "less_half" -> 0.25f
                 "half" -> 0.5f
@@ -117,13 +117,13 @@ class HFElementPreview @JvmOverloads constructor(
 
 
     private fun requestRedraw() {
-        view.previewer.removeAllViews()
+        view.findViewById<ViewGroup>(R.id.previewer).removeAllViews()
         bindLayout()
     }
 
     private fun bindLayout() {
-        val not: View = layoutInflater.inflate(R.layout.feed_card_text, null, false)
-        view.previewer.addView(not)
+        val not = FeedCardTextBinding.inflate(layoutInflater,null, false)
+        view.findViewById<ViewGroup>(R.id.previewer).addView(not.root)
         bindPreview(not)
     }
 
@@ -134,7 +134,7 @@ class HFElementPreview @JvmOverloads constructor(
         if (!::layoutInflater.isInitialized) layoutInflater = LayoutInflater.from(holder.itemView.context)
 
         if (ContextCompat.checkSelfPermission(view.context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            view.wallpaper_preview.setImageDrawable(WallpaperManager.getInstance(HFApplication.instance).drawable)
+            view.findViewById<ImageView>(R.id.wallpaper_preview).setImageDrawable(WallpaperManager.getInstance(HFApplication.instance).drawable)
         }
 
         theme = getHFTheme(null)
@@ -143,26 +143,25 @@ class HFElementPreview @JvmOverloads constructor(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindPreview(view: View) {
-        view.not_app_icon.setImageResource(R.drawable.ic_info_24)
-        view.not_app_name.text = "HomeFeeder"
-        view.not_app_subtitle.text = "Subtitle"
-        view.not_app_date.text = "Date"
-        view.not_title.text = "Settings Preview"
-        view.not_text.text = "This is a test of your HomeFeeder appearance settings."
+    private fun bindPreview(view: FeedCardTextBinding) {
+        view.header.notAppIcon.setImageResource(R.drawable.ic_info_24)
+        view.header.notAppName.text = "HomeFeeder"
+        view.header.notAppSubtitle.text = "Subtitle"
+        view.header.notAppDate.text = "Date"
+        view.header.notTitle.text = "Settings Preview"
+        view.header.notText.text = "This is a test of your HomeFeeder appearance settings."
 
         val cardBg = theme.get(Theming.Colors.CARD_BG.ordinal)
         if (!isCompact) {
-            if (view is CardView) view.setCardBackgroundColor(cardBg)
+            (view.root as? CardView)?.setCardBackgroundColor(cardBg)
         }
 
         val theme = if (cardBg.isDark()) Theming.defaultDarkThemeColors else Theming.defaultLightThemeColors
-        view.not_title.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
-        view.not_app_name.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
-        view.not_text.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
-        view.not_app_date.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
-        view.not_app_subtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
-        view.not_app_icon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        view.header.notTitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        view.header.notAppName.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        view.header.notText.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
+        view.header.notAppDate.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
+        view.header.notAppSubtitle.setTextColor(theme.get(Theming.Colors.TEXT_COLOR_SECONDARY.ordinal))
+        view.header.notAppIcon.imageTintList = ColorStateList.valueOf(theme.get(Theming.Colors.TEXT_COLOR_PRIMARY.ordinal))
     }
-
 }

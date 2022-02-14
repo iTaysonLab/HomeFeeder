@@ -12,14 +12,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.activity_main.*
 import ua.itaysonlab.homefeeder.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -46,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.navigation_settings)
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showStorageAlert() {
-        MaterialAlertDialogBuilder(this, R.style.MDialog).apply {
+        MaterialAlertDialogBuilder(this).apply {
             setTitle(R.string.storage_alert)
             setMessage(R.string.storage_desc)
             setPositiveButton(R.string.storage_action) { _, _ ->
